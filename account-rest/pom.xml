@@ -32,10 +32,23 @@
           <artifactId>logic</artifactId>
           <version>${project.version}</version>
         </dependency>
+        <dependency>
+          <groupId>tdp024</groupId>
+          <artifactId>datalayer</artifactId>
+          <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.8.5</version>
+        </dependency>
+
     </dependencies>
 
     <properties>
         <java.version>1.8</java.version>
+        <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>
     </properties>
 
 
