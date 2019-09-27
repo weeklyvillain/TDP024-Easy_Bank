@@ -24,6 +24,7 @@ public class PersonController {
             new PersonLogicFacadeImpl(new PersonEntityFacadeDB());
     //----------------------------------------------------------------------- //
 
+// SKA TAS BORT
     @RequestMapping(path="/create", produces="application/json")
     public ResponseEntity create(@RequestParam String name) {
       System.out.println("Name: " + name);

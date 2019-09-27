@@ -3,13 +3,13 @@ package se.liu.ida.tdp024.account.logic.test.facade;
 import org.junit.After;
 import org.junit.Test;
 import se.liu.ida.tdp024.account.data.api.util.StorageFacade;
-import se.liu.ida.tdp024.account.logic.api.facade.AccountLogicFacade;
+import se.liu.ida.tdp024.account.logic.api.facade.PersonLogicFacade;
 
-public class AccountLogicFacadeTest {
+public class PersonLogicFacadeTest {
 
 
     //--- Unit under test ---//
-    public AccountLogicFacade accountLogicFacade;
+    public PersonLogicFacade personLogicFacade;
     public StorageFacade storageFacade;
 
     @After
