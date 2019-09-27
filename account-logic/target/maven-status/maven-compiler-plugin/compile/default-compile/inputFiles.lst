@@ -1,4 +1,4 @@
-/home/filer358/mygit/account-project/account-logic/src/main/java/se/liu/ida/tdp024/account/logic/impl/facade/AccountLogicFacadeImpl.java
-/home/filer358/mygit/account-project/account-logic/src/main/java/se/liu/ida/tdp024/account/logic/api/facade/AccountLogicFacade.java
-/home/filer358/mygit/account-project/account-logic/src/main/java/se/liu/ida/tdp024/account/logic/api/facade/PersonLogicFacade.java
-/home/filer358/mygit/account-project/account-logic/src/main/java/se/liu/ida/tdp024/account/logic/impl/facade/PersonLogicFacadeImpl.java
+/home/gustav/code/tdp024/account-logic/src/main/java/se/liu/ida/tdp024/account/logic/impl/facade/PersonLogicFacadeImpl.java
+/home/gustav/code/tdp024/account-logic/src/main/java/se/liu/ida/tdp024/account/logic/impl/facade/AccountLogicFacadeImpl.java
+/home/gustav/code/tdp024/account-logic/src/main/java/se/liu/ida/tdp024/account/logic/api/facade/AccountLogicFacade.java
+/home/gustav/code/tdp024/account-logic/src/main/java/se/liu/ida/tdp024/account/logic/api/facade/PersonLogicFacade.java

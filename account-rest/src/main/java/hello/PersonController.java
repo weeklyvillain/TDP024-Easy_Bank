@@ -40,6 +40,20 @@ public class PersonController {
       return new ResponseEntity(json,HttpStatus.OK);
     }
 
+    @RequestMapping(path="/find", produces = "application/json", params={"name"})
+    public ResponseEntity find(@RequestParam String name) {
+      List<Person> personList = personLogicFacade.find(name);
+      String json = new Gson().toJson(personList);
+      return new ResponseEntity(json, HttpStatus.OK);
+    }
+
+    @RequestMapping(path="/find", produces = "application/json", params={"key"})
+    public ResponseEntity find(@RequestParam long key) {
+      Person person = personLogicFacade.find(key);
+      String json = new Gson().toJson(person);
+      return new ResponseEntity(json, HttpStatus.OK);
+    }
+
 
 
 }

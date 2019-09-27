@@ -20,6 +20,7 @@ public class PersonEntityFacadeDB implements PersonEntityFacade {
           Query query = em.createQuery("SELECT t FROM PersonDB t");
           return query.getResultList();
       } catch (Exception e) {
+          System.out.println(e);
           return null;
       } finally {
           em.close();
@@ -28,12 +29,32 @@ public class PersonEntityFacadeDB implements PersonEntityFacade {
 
     @Override
     public List<Person> find(String name) {
-      return null;
+        EntityManager em = EMF.getEntityManager();
+        try {
+            return (List<Person>) em.createQuery("SELECT t FROM PersonDB t WHERE t.name LIKE :name ")
+                  .setParameter("name", name)
+                  .getResultList();
+        } catch(Exception e) {
+            System.out.println(e);
+            return null;
+        } finally {
+            em.close();
+        }
     }
 
     @Override
     public Person find(long key) {
-      return null;
+        EntityManager em = EMF.getEntityManager();
+        try {
+            return (Person) em.createQuery("SELECT t FROM PersonDB t WHERE t.id = :key ")
+                  .setParameter("key", key)
+                  .getSingleResult();
+        } catch(Exception e) {
+            System.out.println(e);
+            return null;
+        } finally {
+            em.close();
+        }
     }
 
     @Override

@@ -1,13 +1,13 @@
 ----------------------------------------------------------------
-Fri Sep 20 11:51:17 CEST 2019:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.14.2.0 - (1828579): instance a816c00e-016d-4e15-3b5f-000010dc6b18 
-on database directory memory:/home/filer358/mygit/account-project/account-rest/dataPU_embedded with class loader java.net.URLClassLoader@2cd62003 
-Loaded from file:/home/filer358/.m2/repository/org/apache/derby/derby/10.14.2.0/derby-10.14.2.0.jar
-java.vendor=Ubuntu
-java.runtime.version=11.0.4+11-post-Ubuntu-1ubuntu218.04.3
-user.dir=/home/filer358/mygit/account-project/account-rest
+Tue Sep 24 13:44:41 CEST 2019:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.14.2.0 - (1828579): instance a816c00e-016d-6316-7da1-000014bb6b50 
+on database directory memory:/home/gustav/code/tdp024/account-rest/dataPU_embedded with class loader java.net.URLClassLoader@3319933d 
+Loaded from file:/home/gustav/.m2/repository/org/apache/derby/derby/10.14.2.0/derby-10.14.2.0.jar
+java.vendor=Oracle Corporation
+java.runtime.version=1.8.0_181-8u181-b13-2~deb9u1-b13
+user.dir=/home/gustav/code/tdp024/account-rest
 os.name=Linux
 os.arch=amd64
-os.version=4.15.0-64-generic
+os.version=4.15.0-30deepin-generic
 derby.system.home=null
 Database Class Loader started - derby.database.classpath=''
