@@ -1,0 +1,16 @@
+-------------------------------------------------------------------------------
+Test set: se.liu.ida.tdp024.account.xfinal.test.account.AccountCreateTest
+-------------------------------------------------------------------------------
+Tests run: 3, Failures: 3, Errors: 0, Skipped: 0, Time elapsed: 0.028 s <<< FAILURE! - in se.liu.ida.tdp024.account.xfinal.test.account.AccountCreateTest
+createSuccessAllCombos(se.liu.ida.tdp024.account.xfinal.test.account.AccountCreateTest)  Time elapsed: 0.01 s  <<< FAILURE!
+org.junit.ComparisonFailure: expected:<[OK]> but was:<[]>
+	at se.liu.ida.tdp024.account.xfinal.test.account.AccountCreateTest.createSuccessAllCombos(AccountCreateTest.java:114)
+
+createSuccess(se.liu.ida.tdp024.account.xfinal.test.account.AccountCreateTest)  Time elapsed: 0.009 s  <<< FAILURE!
+org.junit.ComparisonFailure: expected:<[OK]> but was:<[]>
+	at se.liu.ida.tdp024.account.xfinal.test.account.AccountCreateTest.createSuccess(AccountCreateTest.java:23)
+
+createFailure(se.liu.ida.tdp024.account.xfinal.test.account.AccountCreateTest)  Time elapsed: 0.009 s  <<< FAILURE!
+org.junit.ComparisonFailure: expected:<[FAILED]> but was:<[]>
+	at se.liu.ida.tdp024.account.xfinal.test.account.AccountCreateTest.createFailure(AccountCreateTest.java:129)
+

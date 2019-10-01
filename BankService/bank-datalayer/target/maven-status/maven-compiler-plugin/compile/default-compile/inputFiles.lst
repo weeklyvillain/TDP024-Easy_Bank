@@ -1,0 +1,7 @@
+/home/gussv375/Desktop/tdp024/BankService/bank-datalayer/src/main/java/se/liu/ida/tdp024/bank/data/impl/db/util/StorageFacadeDB.java
+/home/gussv375/Desktop/tdp024/BankService/bank-datalayer/src/main/java/se/liu/ida/tdp024/bank/data/api/facade/BankEntityFacade.java
+/home/gussv375/Desktop/tdp024/BankService/bank-datalayer/src/main/java/se/liu/ida/tdp024/bank/data/api/entity/Bank.java
+/home/gussv375/Desktop/tdp024/BankService/bank-datalayer/src/main/java/se/liu/ida/tdp024/bank/data/impl/db/entity/BankDB.java
+/home/gussv375/Desktop/tdp024/BankService/bank-datalayer/src/main/java/se/liu/ida/tdp024/bank/data/impl/db/facade/BankEntityFacadeDB.java
+/home/gussv375/Desktop/tdp024/BankService/bank-datalayer/src/main/java/se/liu/ida/tdp024/bank/data/api/util/StorageFacade.java
+/home/gussv375/Desktop/tdp024/BankService/bank-datalayer/src/main/java/se/liu/ida/tdp024/bank/data/impl/db/util/EMF.java

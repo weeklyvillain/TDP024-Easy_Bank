@@ -1,0 +1,12 @@
+-------------------------------------------------------------------------------
+Test set: se.liu.ida.tdp024.account.xfinal.test.account.AccountFindTest
+-------------------------------------------------------------------------------
+Tests run: 2, Failures: 2, Errors: 0, Skipped: 0, Time elapsed: 0.018 s <<< FAILURE! - in se.liu.ida.tdp024.account.xfinal.test.account.AccountFindTest
+testFind(se.liu.ida.tdp024.account.xfinal.test.account.AccountFindTest)  Time elapsed: 0.008 s  <<< FAILURE!
+org.junit.ComparisonFailure: expected:<[OK]> but was:<[]>
+	at se.liu.ida.tdp024.account.xfinal.test.account.AccountFindTest.testFind(AccountFindTest.java:27)
+
+testFindFailure(se.liu.ida.tdp024.account.xfinal.test.account.AccountFindTest)  Time elapsed: 0.009 s  <<< FAILURE!
+org.junit.ComparisonFailure: expected:<[[]]> but was:<[]>
+	at se.liu.ida.tdp024.account.xfinal.test.account.AccountFindTest.testFindFailure(AccountFindTest.java:59)
+

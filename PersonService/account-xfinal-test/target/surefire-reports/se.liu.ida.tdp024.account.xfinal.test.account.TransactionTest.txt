@@ -1,0 +1,16 @@
+-------------------------------------------------------------------------------
+Test set: se.liu.ida.tdp024.account.xfinal.test.account.TransactionTest
+-------------------------------------------------------------------------------
+Tests run: 3, Failures: 3, Errors: 0, Skipped: 0, Time elapsed: 0.209 s <<< FAILURE! - in se.liu.ida.tdp024.account.xfinal.test.account.TransactionTest
+testFind(se.liu.ida.tdp024.account.xfinal.test.account.TransactionTest)  Time elapsed: 0.021 s  <<< FAILURE!
+org.junit.ComparisonFailure: expected:<[OK]> but was:<[]>
+	at se.liu.ida.tdp024.account.xfinal.test.account.TransactionTest.testFind(TransactionTest.java:31)
+
+testDebitConcurrency(se.liu.ida.tdp024.account.xfinal.test.account.TransactionTest)  Time elapsed: 0.015 s  <<< FAILURE!
+org.junit.ComparisonFailure: expected:<[OK]> but was:<[]>
+	at se.liu.ida.tdp024.account.xfinal.test.account.TransactionTest.testDebitConcurrency(TransactionTest.java:117)
+
+testCreditConcurrency(se.liu.ida.tdp024.account.xfinal.test.account.TransactionTest)  Time elapsed: 0.013 s  <<< FAILURE!
+org.junit.ComparisonFailure: expected:<[OK]> but was:<[]>
+	at se.liu.ida.tdp024.account.xfinal.test.account.TransactionTest.testCreditConcurrency(TransactionTest.java:178)
+
