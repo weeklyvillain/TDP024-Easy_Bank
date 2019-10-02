@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AccountEntityFacadeDB.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">datalayer</a> &gt; <a href="index.source.html" class="el_package">se.liu.ida.tdp024.account.data.impl.db.facade</a> &gt; <span class="el_source">AccountEntityFacadeDB.java</span></div><h1>AccountEntityFacadeDB.java</h1><pre class="source lang-java linenums">package se.liu.ida.tdp024.account.data.impl.db.facade;
+
+import java.util.List;
+import java.util.ServiceConfigurationError;
+import javax.persistence.EntityManager;
+import javax.persistence.LockModeType;
+import javax.persistence.Query;
+import se.liu.ida.tdp024.account.data.api.entity.Account;
+import se.liu.ida.tdp024.account.data.impl.db.entity.AccountDB;
+import se.liu.ida.tdp024.account.data.api.facade.AccountEntityFacade;
+import se.liu.ida.tdp024.account.data.impl.db.util.EMF;
+
+<span class="nc" id="L13">public class AccountEntityFacadeDB implements AccountEntityFacade {</span>
+    @Override
+    public boolean create(String type, long personKey, long bankKey) {
+<span class="nc" id="L16">        return true;</span>
+    }
+}
+
+/*
+public class AccountEntityFacadeDB implements AccountEntityFacade {
+
+    @Override
+    public List&lt;Account&gt; list() {
+      EntityManager em = EMF.getEntityManager();
+
+      Query query = em.createQuery(&quot;SELECT t FROM AccountDB t&quot;);
+      List&lt;Account&gt; result =  query.getResultList();
+      em.close();
+      return result;
+    }
+
+    @Override
+    public List&lt;Account&gt; find(String name) {
+        EntityManager em = EMF.getEntityManager();
+        List&lt;Account&gt; result = (List&lt;Account&gt;) em.createQuery(&quot;SELECT t FROM AccountDB t WHERE t.name LIKE :name &quot;)
+              .setParameter(&quot;name&quot;, name)
+              .getResultList();
+        em.close();
+        return result;
+    }
+
+    @Override
+    public Account find(long key) {
+        EntityManager em = EMF.getEntityManager();
+        try {
+            Account result = (Account) em.createQuery(&quot;SELECT t FROM AccountDB t WHERE t.id = :key &quot;)
+                  .setParameter(&quot;key&quot;, key)
+                  .getSingleResult();
+            return result;
+        } catch(Exception e) {
+            System.out.println(e);
+            return null;
+        } finally {
+            em.close();
+        }
+
+    }
+
+    @Override
+    public long create(String name) {
+      EntityManager em = EMF.getEntityManager();
+
+      try {
+        em.getTransaction().begin();
+        Account person = new AccountDB();
+        person.setName(name);
+        em.persist(person);
+        em.getTransaction().commit();
+        return person.getId();
+      } catch(Exception e) {
+        System.out.println(e);
+        return -1;
+      } finally {
+        if (em.getTransaction().isActive()) {
+          em.getTransaction().rollback();
+        }
+        em.close();
+      }
+    }
+
+
+    /*
+    @Override
+    public long create(String title, String body) {
+
+        EntityManager em = EMF.getEntityManager();
+
+        try {
+
+            em.getTransaction().begin();
+
+            Todo todo = new TodoDB();
+            todo.setTitle(title);
+            todo.setBody(body);
+
+            em.persist(todo);
+
+            em.getTransaction().commit();
+
+            return todo.getId();
+
+        } catch (Exception e) {
+
+            todoLogger.log(e);
+            throw new ServiceConfigurationError(&quot;Commit fails&quot;);
+
+        } finally {
+
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+            em.close();
+        }
+
+    }
+
+    @Override
+    public void setActive(long id, boolean active) {
+
+        EntityManager em = EMF.getEntityManager();
+
+        try {
+
+            em.getTransaction().begin();
+
+            Todo todo = em.find(TodoDB.class, id, LockModeType.PESSIMISTIC_WRITE);
+            todo.setActive(active);
+
+            em.merge(todo);
+
+            em.getTransaction().commit();
+
+        } catch (Exception e) {
+
+            todoLogger.log(e);
+
+        } finally {
+
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+
+            em.close();
+        }
+
+    }
+
+    @Override
+    public Todo find(long id) {
+
+        EntityManager em = EMF.getEntityManager();
+
+        try {
+
+            return em.find(TodoDB.class, id);
+
+        } catch (Exception e) {
+
+            todoLogger.log(e);
+            return null;
+
+        } finally {
+            em.close();
+        }
+
+    }
+
+    @Override
+    public List&lt;Todo&gt; findAll() {
+
+        EntityManager em = EMF.getEntityManager();
+
+        try {
+
+            Query query = em.createQuery(&quot;SELECT t FROM TodoDB t&quot;);
+            return query.getResultList();
+
+        } catch (Exception e) {
+
+            todoLogger.log(e);
+            return null;
+
+        } finally {
+            em.close();
+        }
+
+    }
+}
+*/
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

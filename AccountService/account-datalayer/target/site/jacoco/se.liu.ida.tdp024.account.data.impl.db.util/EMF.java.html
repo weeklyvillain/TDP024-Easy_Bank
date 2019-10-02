@@ -10,13 +10,13 @@ import javax.persistence.Persistence;
 
     public static EntityManager getEntityManager() {
 
-<span class="fc" id="L13">        synchronized (EMF.class) {</span>
-<span class="pc bpc" id="L14" title="1 of 4 branches missed.">            if (entityManagerFactory == null || !entityManagerFactory.isOpen()) {</span>
-<span class="fc" id="L15">                entityManagerFactory = Persistence.createEntityManagerFactory(&quot;account-dataPU&quot;);</span>
+<span class="nc" id="L13">        synchronized (EMF.class) {</span>
+<span class="nc bnc" id="L14" title="All 4 branches missed.">            if (entityManagerFactory == null || !entityManagerFactory.isOpen()) {</span>
+<span class="nc" id="L15">                entityManagerFactory = Persistence.createEntityManagerFactory(&quot;account-dataPU&quot;);</span>
             }
-<span class="fc" id="L17">        }</span>
+<span class="nc" id="L17">        }</span>
 
-<span class="fc" id="L19">        return entityManagerFactory.createEntityManager();</span>
+<span class="nc" id="L19">        return entityManagerFactory.createEntityManager();</span>
     }
 
     public static void close() {

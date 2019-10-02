@@ -9,7 +9,7 @@ import se.liu.ida.tdp024.account.util.http.HTTPHelperImpl;
 import se.liu.ida.tdp024.account.xfinal.test.util.FinalConstants;
 
 public class AccountCreateTest {
-
+/*
     private static final HTTPHelper httpHelper = new HTTPHelperImpl();
 
     @Test
@@ -263,8 +263,9 @@ public class AccountCreateTest {
             Assert.assertEquals("FAILED", response);
         }
 
-
+*/
         /* Wrong endpoint (i.e. incorrect request) */
+        /*
         {
             String person = "3";
             String bank = "SWEDBANK";
@@ -290,4 +291,5 @@ public class AccountCreateTest {
 
 
     }
+    */
 }
