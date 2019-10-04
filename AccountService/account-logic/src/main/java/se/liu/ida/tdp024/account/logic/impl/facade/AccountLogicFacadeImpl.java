@@ -1,7 +1,9 @@
 package se.liu.ida.tdp024.account.logic.impl.facade;
 
 import se.liu.ida.tdp024.account.data.api.entity.Account;
+import se.liu.ida.tdp024.account.data.api.entity.Transaction;
 import se.liu.ida.tdp024.account.data.api.facade.AccountEntityFacade;
+import se.liu.ida.tdp024.account.data.api.facade.TransactionEntityFacade;
 import se.liu.ida.tdp024.account.logic.api.facade.AccountLogicFacade;
 import java.util.List;
 import se.liu.ida.tdp024.account.util.http.HTTPHelper;
@@ -12,10 +14,12 @@ import com.google.gson.JsonElement;
 public class AccountLogicFacadeImpl implements AccountLogicFacade {
 
     private AccountEntityFacade accountEntityFacade;
+    private TransactionEntityFacade transactionEntityFacade;
     private HTTPHelper httpHelper;
 
-    public AccountLogicFacadeImpl(AccountEntityFacade accountEntityFacade, HTTPHelper httpHelper) {
+    public AccountLogicFacadeImpl(AccountEntityFacade accountEntityFacade, TransactionEntityFacade transactionEntityFacade, HTTPHelper httpHelper) {
         this.accountEntityFacade = accountEntityFacade;
+        this.transactionEntityFacade = transactionEntityFacade;
         this.httpHelper = httpHelper;
     }
 
@@ -28,6 +32,46 @@ public class AccountLogicFacadeImpl implements AccountLogicFacade {
         long bankKey = getBankKey(bankName);
         return this.accountEntityFacade.create(type, personKey, bankKey);
     }
+
+    @Override
+    public List<Account> find(long personKey) {
+        return this.accountEntityFacade.findByPersonKey(personKey);
+    }
+
+    @Override
+    public boolean debit(long accountId, int amount) {
+        Account account = this.accountEntityFacade.findByAccountId(accountId);
+        boolean result = false;
+        if (account != null && account.getHoldings() >= amount && amount > 0) {
+            result = this.accountEntityFacade.debit(accountId, amount);
+        }
+        String status = result ? "OK" : "FAILED";
+        this.transactionEntityFacade.create("DEBIT", amount, status, account);
+        return result;
+    }
+
+    @Override
+    public boolean credit(long accountId, int amount) {
+        Account account = this.accountEntityFacade.findByAccountId(accountId);
+        boolean result = false;
+        if (account != null && account.getHoldings() >= amount && amount > 0) {
+            result = this.accountEntityFacade.credit(accountId, amount);
+        }
+        String status = result ? "OK" : "FAILED";
+        this.transactionEntityFacade.create("CREDIT", amount, status, account);
+        return result;
+    }
+
+    @Override
+    public List<Transaction> getTransactions(long accountId) {
+        Account account = this.accountEntityFacade.findByAccountId(accountId);
+        return this.transactionEntityFacade.find(account);
+    }
+
+
+
+
+
 
     private boolean validatePersonKey(long personKey) {
         String result = this.httpHelper.get("http://localhost:8060/person/find", "key", Long.toString(personKey));

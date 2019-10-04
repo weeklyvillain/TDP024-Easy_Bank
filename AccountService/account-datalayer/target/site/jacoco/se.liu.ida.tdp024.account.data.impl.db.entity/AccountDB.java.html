@@ -12,41 +12,52 @@ import se.liu.ida.tdp024.account.data.api.entity.Account;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
-    private String personKey;
+    private long personKey;
     private String accountType;
-    private String bankKey;
-    private long holdings;
+    private long bankKey;
+    private int holdings;
+
 
     @Override
     public long getId() {
-<span class="nc" id="L22">        return this.id;</span>
+<span class="nc" id="L23">        return this.id;</span>
     }
 
     @Override
-    public String getPersonKey() {
-<span class="nc" id="L27">        return this.personKey;</span>
+    public long getPersonKey() {
+<span class="nc" id="L28">        return this.personKey;</span>
     }
+    @Override
+    public void setPersonKey(long personKey) {
+<span class="nc" id="L32">        this.personKey = personKey;</span>
+<span class="nc" id="L33">    }</span>
 
     @Override
     public String getType() {
-<span class="nc" id="L32">        return this.accountType;</span>
+<span class="nc" id="L37">        return this.accountType;</span>
     }
+    @Override
+    public void setType(String type) {
+<span class="nc" id="L41">        this.accountType = type;</span>
+<span class="nc" id="L42">    }</span>
 
     @Override
-    public String getBankKey() {
-<span class="nc" id="L37">        return this.bankKey;</span>
+    public long getBankKey() {
+<span class="nc" id="L46">        return this.bankKey;</span>
     }
+    @Override
+    public void setBankKey(long bankKey) {
+<span class="nc" id="L50">        this.bankKey = bankKey;</span>
+<span class="nc" id="L51">    }</span>
 
     @Override
-    public long getHoldings() {
-<span class="nc" id="L42">        return this.holdings;</span>
+    public int getHoldings() {
+<span class="nc" id="L55">        return this.holdings;</span>
     }
-
     @Override
-    public void setHoldings(long newHoldings) {
-<span class="nc" id="L47">        this.holdings = newHoldings;</span>
-<span class="nc" id="L48">    }</span>
-
+    public void setHoldings(int newHoldings) {
+<span class="nc" id="L59">        this.holdings = newHoldings;</span>
+<span class="nc" id="L60">    }</span>
 }
 /*
 @Entity

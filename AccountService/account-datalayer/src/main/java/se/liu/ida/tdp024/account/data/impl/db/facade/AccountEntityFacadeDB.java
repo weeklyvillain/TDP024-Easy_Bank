@@ -1,6 +1,7 @@
 package se.liu.ida.tdp024.account.data.impl.db.facade;
 
 import java.util.List;
+import java.util.ArrayList;
 import java.util.ServiceConfigurationError;
 import javax.persistence.EntityManager;
 import javax.persistence.LockModeType;
@@ -13,27 +14,103 @@ import se.liu.ida.tdp024.account.data.impl.db.util.EMF;
 public class AccountEntityFacadeDB implements AccountEntityFacade {
     @Override
     public boolean create(String type, long personKey, long bankKey) {
-        /*
         EntityManager em = EMF.getEntityManager();
 
         try {
           em.getTransaction().begin();
           Account account = new AccountDB();
-          account.setName(name);
-          em.persist(person);
+          account.setType(type);
+          account.setBankKey(bankKey);
+          account.setPersonKey(personKey);
+          account.setHoldings(0);
+          em.persist(account);
           em.getTransaction().commit();
-          return person.getId();
+          return true;
         } catch(Exception e) {
           System.out.println(e);
-          return -1;
+          return false;
         } finally {
           if (em.getTransaction().isActive()) {
             em.getTransaction().rollback();
           }
           em.close();
         }
-        */
-        return true;
+    }
+
+    @Override
+    public List<Account> findByPersonKey(long personKey) {
+        EntityManager em = EMF.getEntityManager();
+        try {
+            List<Account> result = (List<Account>) em.createQuery("SELECT t FROM AccountDB t WHERE t.personKey = :key ")
+                  .setParameter("key", personKey)
+                  .getResultList();
+            return result;
+        } catch(Exception e) {
+            System.out.println(e);
+            return new ArrayList<Account>();
+        } finally {
+            em.close();
+        }
+    }
+
+    @Override
+    public boolean debit(long id, int amount) {
+        Account account = this.findByAccountId(id);
+        account.setHoldings(account.getHoldings() - amount);
+        EntityManager em = EMF.getEntityManager();
+        try {
+            em.getTransaction().begin();
+            em.merge(account);
+            em.getTransaction().commit();
+            return true;
+        } catch(Exception e) {
+          System.out.println(e);
+          return false;
+        } finally {
+          if (em.getTransaction().isActive()) {
+            em.getTransaction().rollback();
+          }
+          em.close();
+        }
+    }
+
+    @Override
+    public boolean credit(long id, int amount) {
+        Account account = this.findByAccountId(id);
+        account.setHoldings(account.getHoldings() + amount);
+        EntityManager em = EMF.getEntityManager();
+        try {
+            em.getTransaction().begin();
+            em.merge(account);
+            em.getTransaction().commit();
+            return true;
+        } catch(Exception e) {
+          System.out.println(e);
+          return false;
+        } finally {
+          if (em.getTransaction().isActive()) {
+            em.getTransaction().rollback();
+          }
+          em.close();
+        }
+    }
+
+
+    // Help functions
+    @Override
+    public Account findByAccountId(long id) {
+        EntityManager em = EMF.getEntityManager();
+        try {
+            Account result = (Account) em.createQuery("SELECT t FROM AccountDB t WHERE t.id = :id ")
+                  .setParameter("id", id)
+                  .getSingleResult();
+            return result;
+        } catch(Exception e) {
+            System.out.println(e);
+            return null;
+        } finally {
+            em.close();
+        }
     }
 }
 

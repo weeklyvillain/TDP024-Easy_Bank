@@ -5,6 +5,13 @@ import se.liu.ida.tdp024.account.data.api.entity.Account;
 
 public interface AccountEntityFacade {
     public boolean create(String type, long personKey, long bankKey);
+    public List<Account> findByPersonKey(long personKey);
+    public boolean debit(long id, int amount);
+    public boolean credit(long id, int amount);
+
+
+    // Help functions
+    public Account findByAccountId(long id);
 }
 /*
 

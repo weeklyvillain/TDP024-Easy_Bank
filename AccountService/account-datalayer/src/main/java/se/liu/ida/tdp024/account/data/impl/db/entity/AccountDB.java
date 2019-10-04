@@ -12,10 +12,10 @@ public class AccountDB implements Account {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
-    private String personKey;
+    private long personKey;
     private String accountType;
-    private String bankKey;
-    private long holdings;
+    private long bankKey;
+    private int holdings;
 
 
     @Override
@@ -24,27 +24,38 @@ public class AccountDB implements Account {
     }
 
     @Override
-    public String getPersonKey() {
+    public long getPersonKey() {
         return this.personKey;
+    }
+    @Override
+    public void setPersonKey(long personKey) {
+        this.personKey = personKey;
     }
 
     @Override
     public String getType() {
         return this.accountType;
     }
+    @Override
+    public void setType(String type) {
+        this.accountType = type;
+    }
 
     @Override
-    public String getBankKey() {
+    public long getBankKey() {
         return this.bankKey;
     }
-
     @Override
-    public long getHoldings() {
-        return this.holdings;
+    public void setBankKey(long bankKey) {
+        this.bankKey = bankKey;
     }
 
     @Override
-    public void setHoldings(long newHoldings) {
+    public int getHoldings() {
+        return this.holdings;
+    }
+    @Override
+    public void setHoldings(int newHoldings) {
         this.holdings = newHoldings;
     }
 }

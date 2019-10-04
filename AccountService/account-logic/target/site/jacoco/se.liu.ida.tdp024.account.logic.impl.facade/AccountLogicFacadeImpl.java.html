@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AccountLogicFacadeImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">logic</a> &gt; <a href="index.source.html" class="el_package">se.liu.ida.tdp024.account.logic.impl.facade</a> &gt; <span class="el_source">AccountLogicFacadeImpl.java</span></div><h1>AccountLogicFacadeImpl.java</h1><pre class="source lang-java linenums">package se.liu.ida.tdp024.account.logic.impl.facade;
 
 import se.liu.ida.tdp024.account.data.api.entity.Account;
+import se.liu.ida.tdp024.account.data.api.entity.Transaction;
 import se.liu.ida.tdp024.account.data.api.facade.AccountEntityFacade;
+import se.liu.ida.tdp024.account.data.api.facade.TransactionEntityFacade;
 import se.liu.ida.tdp024.account.logic.api.facade.AccountLogicFacade;
 import java.util.List;
 import se.liu.ida.tdp024.account.util.http.HTTPHelper;
@@ -12,46 +14,87 @@ import com.google.gson.JsonElement;
 public class AccountLogicFacadeImpl implements AccountLogicFacade {
 
     private AccountEntityFacade accountEntityFacade;
+    private TransactionEntityFacade transactionEntityFacade;
     private HTTPHelper httpHelper;
 
-<span class="nc" id="L17">    public AccountLogicFacadeImpl(AccountEntityFacade accountEntityFacade, HTTPHelper httpHelper) {</span>
-<span class="nc" id="L18">        this.accountEntityFacade = accountEntityFacade;</span>
-<span class="nc" id="L19">        this.httpHelper = httpHelper;</span>
-<span class="nc" id="L20">    }</span>
+<span class="nc" id="L20">    public AccountLogicFacadeImpl(AccountEntityFacade accountEntityFacade, TransactionEntityFacade transactionEntityFacade, HTTPHelper httpHelper) {</span>
+<span class="nc" id="L21">        this.accountEntityFacade = accountEntityFacade;</span>
+<span class="nc" id="L22">        this.transactionEntityFacade = transactionEntityFacade;</span>
+<span class="nc" id="L23">        this.httpHelper = httpHelper;</span>
+<span class="nc" id="L24">    }</span>
 
     @Override
     public boolean create(String type, long personKey, String bankName) {
-<span class="nc bnc" id="L24" title="All 6 branches missed.">        if (!validateType(type) || !validatePersonKey(personKey) || !validateBankName(bankName)) {</span>
-<span class="nc" id="L25">            return false;</span>
+<span class="nc bnc" id="L28" title="All 6 branches missed.">        if (!validateType(type) || !validatePersonKey(personKey) || !validateBankName(bankName)) {</span>
+<span class="nc" id="L29">            return false;</span>
         }
 
-<span class="nc" id="L28">        long bankKey = getBankKey(bankName);</span>
-
-<span class="nc" id="L30">        return this.accountEntityFacade.create(type, personKey, bankKey);</span>
+<span class="nc" id="L32">        long bankKey = getBankKey(bankName);</span>
+<span class="nc" id="L33">        return this.accountEntityFacade.create(type, personKey, bankKey);</span>
     }
+
+    @Override
+    public List&lt;Account&gt; find(long personKey) {
+<span class="nc" id="L38">        return this.accountEntityFacade.findByPersonKey(personKey);</span>
+    }
+
+    @Override
+    public boolean debit(long accountId, int amount) {
+<span class="nc" id="L43">        Account account = this.accountEntityFacade.findByAccountId(accountId);</span>
+<span class="nc" id="L44">        boolean result = false;</span>
+<span class="nc bnc" id="L45" title="All 6 branches missed.">        if (account != null &amp;&amp; account.getHoldings() &gt;= amount &amp;&amp; amount &gt; 0) {</span>
+<span class="nc" id="L46">            result = this.accountEntityFacade.debit(accountId, amount);</span>
+        }
+<span class="nc bnc" id="L48" title="All 2 branches missed.">        String status = result ? &quot;OK&quot; : &quot;FAILED&quot;;</span>
+<span class="nc" id="L49">        this.transactionEntityFacade.create(&quot;DEBIT&quot;, amount, status, account);</span>
+<span class="nc" id="L50">        return result;</span>
+    }
+
+    @Override
+    public boolean credit(long accountId, int amount) {
+<span class="nc" id="L55">        Account account = this.accountEntityFacade.findByAccountId(accountId);</span>
+<span class="nc" id="L56">        boolean result = false;</span>
+<span class="nc bnc" id="L57" title="All 6 branches missed.">        if (account != null &amp;&amp; account.getHoldings() &gt;= amount &amp;&amp; amount &gt; 0) {</span>
+<span class="nc" id="L58">            result = this.accountEntityFacade.credit(accountId, amount);</span>
+        }
+<span class="nc bnc" id="L60" title="All 2 branches missed.">        String status = result ? &quot;OK&quot; : &quot;FAILED&quot;;</span>
+<span class="nc" id="L61">        this.transactionEntityFacade.create(&quot;CREDIT&quot;, amount, status, account);</span>
+<span class="nc" id="L62">        return result;</span>
+    }
+
+    @Override
+    public List&lt;Transaction&gt; getTransactions(long accountId) {
+<span class="nc" id="L67">        Account account = this.accountEntityFacade.findByAccountId(accountId);</span>
+<span class="nc" id="L68">        return this.transactionEntityFacade.find(account);</span>
+    }
+
+
+
+
+
 
     private boolean validatePersonKey(long personKey) {
-<span class="nc" id="L34">        String result = this.httpHelper.get(&quot;http://localhost:8060/person/find&quot;, &quot;key&quot;, Long.toString(personKey));</span>
-<span class="nc" id="L35">        System.out.println(result);</span>
-<span class="nc bnc" id="L36" title="All 2 branches missed.">        return !result.equals(&quot;null&quot;);</span>
+<span class="nc" id="L77">        String result = this.httpHelper.get(&quot;http://localhost:8060/person/find&quot;, &quot;key&quot;, Long.toString(personKey));</span>
+<span class="nc" id="L78">        System.out.println(result);</span>
+<span class="nc bnc" id="L79" title="All 2 branches missed.">        return !result.equals(&quot;null&quot;);</span>
     }
     private boolean validateBankName(String bankName) {
-<span class="nc" id="L39">        String result = this.httpHelper.get(&quot;http://localhost:8070/bank/find&quot;, &quot;name&quot;, bankName);</span>
-<span class="nc" id="L40">        System.out.println(result);</span>
-<span class="nc bnc" id="L41" title="All 2 branches missed.">        return !result.equals(&quot;null&quot;);</span>
+<span class="nc" id="L82">        String result = this.httpHelper.get(&quot;http://localhost:8070/bank/find&quot;, &quot;name&quot;, bankName);</span>
+<span class="nc" id="L83">        System.out.println(result);</span>
+<span class="nc bnc" id="L84" title="All 2 branches missed.">        return !result.equals(&quot;null&quot;);</span>
 
     }
     private boolean validateType(String type) {
-<span class="nc bnc" id="L45" title="All 4 branches missed.">        return type.equals(&quot;CHECK&quot;) || type.equals(&quot;SAVINGS&quot;);</span>
+<span class="nc bnc" id="L88" title="All 4 branches missed.">        return type.equals(&quot;CHECK&quot;) || type.equals(&quot;SAVINGS&quot;);</span>
     }
 
     private long getBankKey(String bankName) {
-<span class="nc" id="L49">        String result = this.httpHelper.get(&quot;http://localhost:8070/bank/find&quot;, &quot;name&quot;, bankName);</span>
-<span class="nc bnc" id="L50" title="All 2 branches missed.">        if (!result.equals(&quot;null&quot;)) {</span>
-<span class="nc" id="L51">            JsonObject bank = new Gson().fromJson(result, JsonObject.class);</span>
-<span class="nc" id="L52">            return bank.get(&quot;id&quot;).getAsLong();</span>
+<span class="nc" id="L92">        String result = this.httpHelper.get(&quot;http://localhost:8070/bank/find&quot;, &quot;name&quot;, bankName);</span>
+<span class="nc bnc" id="L93" title="All 2 branches missed.">        if (!result.equals(&quot;null&quot;)) {</span>
+<span class="nc" id="L94">            JsonObject bank = new Gson().fromJson(result, JsonObject.class);</span>
+<span class="nc" id="L95">            return bank.get(&quot;id&quot;).getAsLong();</span>
         }
-<span class="nc" id="L54">        return -1;</span>
+<span class="nc" id="L97">        return -1;</span>
     }
 }
 /*

@@ -1,6 +1,7 @@
 package se.liu.ida.tdp024.account.logic.api.facade;
 
 import se.liu.ida.tdp024.account.data.api.entity.Account;
+import se.liu.ida.tdp024.account.data.api.entity.Transaction;
 import java.util.List;
 
 /*
@@ -27,4 +28,8 @@ public interface AccountLogicFacade {
 
 public interface AccountLogicFacade {
     public boolean create(String type, long personKey, String bankName);
+    public List<Account> find(long personKey);
+    public boolean debit(long accountId, int amount);
+    public boolean credit(long accountId, int amount);
+    public List<Transaction> getTransactions(long accountId);
 }
