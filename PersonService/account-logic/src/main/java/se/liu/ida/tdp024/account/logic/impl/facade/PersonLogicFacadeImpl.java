@@ -29,11 +29,6 @@ public class PersonLogicFacadeImpl implements PersonLogicFacade {
       return personEntityFacade.find(key);
     }
 
-    @Override
-    public long create(String name) {
-      return personEntityFacade.create(name);
-    }
-
 
     /*
     @Override

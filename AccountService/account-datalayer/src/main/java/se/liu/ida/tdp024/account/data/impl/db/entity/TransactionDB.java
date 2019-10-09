@@ -1,6 +1,7 @@
 package se.liu.ida.tdp024.account.data.impl.db.entity;
 
 import javax.persistence.Entity;
+import javax.persistence.Column;
 import javax.persistence.PrePersist;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -11,6 +12,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import se.liu.ida.tdp024.account.data.api.entity.Transaction;
 import se.liu.ida.tdp024.account.data.api.entity.Account;
+import se.liu.ida.tdp024.account.data.impl.db.entity.AccountDB;
 
 @Entity
 public class TransactionDB implements Transaction {
@@ -21,7 +23,9 @@ public class TransactionDB implements Transaction {
     private String type;
     private String created;
     private String status;
-    private Account account;
+
+    @ManyToOne
+    private AccountDB account;
 
     @PrePersist
     protected void onCreate() {
@@ -76,6 +80,9 @@ public class TransactionDB implements Transaction {
     }
     @Override
     public void setAccount(Account account) {
-        this.account = account;
+        if (account instanceof AccountDB) {
+            this.account = (AccountDB) account;
+        } else {
+        }
     }
 }

@@ -12,17 +12,17 @@ import se.liu.ida.tdp024.account.data.api.facade.AccountEntityFacade;
 import se.liu.ida.tdp024.account.data.impl.db.util.EMF;
 
 public class AccountEntityFacadeDB implements AccountEntityFacade {
+
     @Override
     public boolean create(String type, long personKey, long bankKey) {
         EntityManager em = EMF.getEntityManager();
-
+        Account account = new AccountDB();
         try {
-          em.getTransaction().begin();
-          Account account = new AccountDB();
-          account.setType(type);
-          account.setBankKey(bankKey);
-          account.setPersonKey(personKey);
-          account.setHoldings(0);
+        em.getTransaction().begin();
+        account.setType(type);
+        account.setBankKey(bankKey);
+        account.setPersonKey(personKey);
+        account.setHoldings(0);
           em.persist(account);
           em.getTransaction().commit();
           return true;
@@ -55,11 +55,15 @@ public class AccountEntityFacadeDB implements AccountEntityFacade {
 
     @Override
     public boolean debit(long id, int amount) {
-        Account account = this.findByAccountId(id);
-        account.setHoldings(account.getHoldings() - amount);
         EntityManager em = EMF.getEntityManager();
+        Account account = this.findByAccountId(id, em);
         try {
             em.getTransaction().begin();
+            em.lock(account, LockModeType.PESSIMISTIC_WRITE);
+            if (account.getHoldings() < amount) {
+                return false;
+            }
+            account.setHoldings(account.getHoldings() - amount);
             em.merge(account);
             em.getTransaction().commit();
             return true;
@@ -76,11 +80,13 @@ public class AccountEntityFacadeDB implements AccountEntityFacade {
 
     @Override
     public boolean credit(long id, int amount) {
-        Account account = this.findByAccountId(id);
-        account.setHoldings(account.getHoldings() + amount);
         EntityManager em = EMF.getEntityManager();
+        Account account = this.findByAccountId(id, em);
+
         try {
             em.getTransaction().begin();
+            em.lock(account, LockModeType.PESSIMISTIC_WRITE);
+            account.setHoldings(account.getHoldings() + amount);
             em.merge(account);
             em.getTransaction().commit();
             return true;
@@ -98,6 +104,17 @@ public class AccountEntityFacadeDB implements AccountEntityFacade {
 
     // Help functions
     @Override
+    public Account findByAccountId(long id, EntityManager em) {
+        try {
+            Account result = (Account) em.createQuery("SELECT t FROM AccountDB t WHERE t.id = :id ")
+                  .setParameter("id", id)
+                  .getSingleResult();
+            return result;
+        } catch(Exception e) {
+            return null;
+        }
+    }
+    @Override
     public Account findByAccountId(long id) {
         EntityManager em = EMF.getEntityManager();
         try {
@@ -106,7 +123,6 @@ public class AccountEntityFacadeDB implements AccountEntityFacade {
                   .getSingleResult();
             return result;
         } catch(Exception e) {
-            System.out.println(e);
             return null;
         } finally {
             em.close();

@@ -56,24 +56,23 @@ import se.liu.ida.tdp024.bank.data.impl.db.util.EMF;
 
     }
 
-    @Override
-    public long create(String name) {
-<span class="fc" id="L61">      EntityManager em = EMF.getEntityManager();</span>
+    public static long create(String name) {
+<span class="fc" id="L60">      EntityManager em = EMF.getEntityManager();</span>
       try {
-<span class="fc" id="L63">        em.getTransaction().begin();</span>
-<span class="fc" id="L64">        Bank bank = new BankDB();</span>
-<span class="fc" id="L65">        bank.setName(name);</span>
-<span class="fc" id="L66">        em.persist(bank);</span>
-<span class="fc" id="L67">        em.getTransaction().commit();</span>
-<span class="fc" id="L68">        return bank.getId();</span>
-<span class="fc" id="L69">      } catch(Exception e) {</span>
+<span class="fc" id="L62">        em.getTransaction().begin();</span>
+<span class="fc" id="L63">        Bank bank = new BankDB();</span>
+<span class="fc" id="L64">        bank.setName(name);</span>
+<span class="fc" id="L65">        em.persist(bank);</span>
+<span class="fc" id="L66">        em.getTransaction().commit();</span>
+<span class="fc" id="L67">        return bank.getId();</span>
+<span class="fc" id="L68">      } catch(Exception e) {</span>
         //System.out.println(e);
-<span class="fc" id="L71">        return -1;</span>
+<span class="fc" id="L70">        return -1;</span>
       } finally {
-<span class="pc bpc" id="L73" title="1 of 2 branches missed.">        if (em.getTransaction().isActive()) {</span>
-<span class="nc" id="L74">          em.getTransaction().rollback();</span>
+<span class="pc bpc" id="L72" title="1 of 2 branches missed.">        if (em.getTransaction().isActive()) {</span>
+<span class="nc" id="L73">          em.getTransaction().rollback();</span>
         }
-<span class="fc" id="L76">        em.close();</span>
+<span class="fc" id="L75">        em.close();</span>
       }
     }
 

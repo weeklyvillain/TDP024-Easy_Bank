@@ -1,4 +1,5 @@
 package se.liu.ida.tdp024.account.data.impl.db.facade;
+import se.liu.ida.tdp024.account.data.impl.db.entity.AccountDB;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -11,20 +12,21 @@ import se.liu.ida.tdp024.account.data.api.entity.Transaction;
 import se.liu.ida.tdp024.account.data.impl.db.entity.TransactionDB;
 import se.liu.ida.tdp024.account.data.api.facade.TransactionEntityFacade;
 import se.liu.ida.tdp024.account.data.impl.db.util.EMF;
+import com.google.gson.Gson;
 
 public class TransactionEntityFacadeDB implements TransactionEntityFacade {
     @Override
     public void create(String type, int amount, String status, Account account) {
         EntityManager em = EMF.getEntityManager();
+        Transaction transaction = new TransactionDB();
 
         try {
           em.getTransaction().begin();
-          Transaction transaction = new TransactionDB();
           transaction.setType(type);
           transaction.setAmount(amount);
           transaction.setStatus(status);
           transaction.setAccount(account);
-          em.persist(transaction);
+          em.merge(transaction);
           em.getTransaction().commit();
         } catch(Exception e) {
           System.out.println(e);

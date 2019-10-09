@@ -40,7 +40,7 @@ public class PersonEntityFacadeTest {
 
     @Test
     public void testCreatePerson() {
-        long id = personEntityFacade.create("Erik");
+        long id = PersonEntityFacadeDB.create("Erik");
         assertThat(id).isNotEqualTo(-1);
     }
 

@@ -13,8 +13,6 @@ public interface PersonLogicFacade {
 
     public Person find(long key);
 
-    public long create(String name);
-
     //public Todo find(long id);
 
     //public void checkOut(long id);

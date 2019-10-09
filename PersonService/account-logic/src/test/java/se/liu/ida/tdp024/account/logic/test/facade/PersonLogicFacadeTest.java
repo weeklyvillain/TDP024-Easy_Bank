@@ -26,7 +26,7 @@ public class PersonLogicFacadeTest {
 
     @Before
     public void setupTests() {
-        personLogicFacade.create("Erik");
+        PersonEntityFacadeDB.create("Erik");
     }
 
     @Test

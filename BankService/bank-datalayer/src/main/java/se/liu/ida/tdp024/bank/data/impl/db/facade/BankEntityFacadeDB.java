@@ -56,8 +56,7 @@ public class BankEntityFacadeDB implements BankEntityFacade {
 
     }
 
-    @Override
-    public long create(String name) {
+    public static long create(String name) {
       EntityManager em = EMF.getEntityManager();
       try {
         em.getTransaction().begin();

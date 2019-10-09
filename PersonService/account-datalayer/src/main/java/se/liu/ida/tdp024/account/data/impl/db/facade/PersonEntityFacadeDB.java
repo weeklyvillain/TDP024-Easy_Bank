@@ -49,8 +49,7 @@ public class PersonEntityFacadeDB implements PersonEntityFacade {
 
     }
 
-    @Override
-    public long create(String name) {
+    public static long create(String name) {
       EntityManager em = EMF.getEntityManager();
 
       try {

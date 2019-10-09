@@ -49,25 +49,24 @@ import se.liu.ida.tdp024.account.data.impl.db.util.EMF;
 
     }
 
-    @Override
-    public long create(String name) {
-<span class="fc" id="L54">      EntityManager em = EMF.getEntityManager();</span>
+    public static long create(String name) {
+<span class="fc" id="L53">      EntityManager em = EMF.getEntityManager();</span>
 
       try {
-<span class="fc" id="L57">        em.getTransaction().begin();</span>
-<span class="fc" id="L58">        Person person = new PersonDB();</span>
-<span class="fc" id="L59">        person.setName(name);</span>
-<span class="fc" id="L60">        em.persist(person);</span>
-<span class="fc" id="L61">        em.getTransaction().commit();</span>
-<span class="fc" id="L62">        return person.getId();</span>
-<span class="nc" id="L63">      } catch(Exception e) {</span>
-<span class="nc" id="L64">        System.out.println(e);</span>
-<span class="nc" id="L65">        return -1;</span>
+<span class="fc" id="L56">        em.getTransaction().begin();</span>
+<span class="fc" id="L57">        Person person = new PersonDB();</span>
+<span class="fc" id="L58">        person.setName(name);</span>
+<span class="fc" id="L59">        em.persist(person);</span>
+<span class="fc" id="L60">        em.getTransaction().commit();</span>
+<span class="fc" id="L61">        return person.getId();</span>
+<span class="nc" id="L62">      } catch(Exception e) {</span>
+<span class="nc" id="L63">        System.out.println(e);</span>
+<span class="nc" id="L64">        return -1;</span>
       } finally {
-<span class="pc bpc" id="L67" title="1 of 2 branches missed.">        if (em.getTransaction().isActive()) {</span>
-<span class="nc" id="L68">          em.getTransaction().rollback();</span>
+<span class="pc bpc" id="L66" title="1 of 2 branches missed.">        if (em.getTransaction().isActive()) {</span>
+<span class="nc" id="L67">          em.getTransaction().rollback();</span>
         }
-<span class="fc" id="L70">        em.close();</span>
+<span class="fc" id="L69">        em.close();</span>
       }
     }
 

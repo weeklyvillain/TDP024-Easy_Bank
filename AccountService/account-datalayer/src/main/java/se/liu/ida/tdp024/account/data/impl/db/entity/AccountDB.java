@@ -17,6 +17,16 @@ public class AccountDB implements Account {
     private long bankKey;
     private int holdings;
 
+/*
+    public AccountDB(Account that) {
+        this.id = that.getId();
+        this.personKey = that.getPersonKey();
+        this.accountType = that.getType();
+        this.bankKey = that.getBankKey();
+        this.holdins = that.getHoldings();
+    }
+    */
+
 
     @Override
     public long getId() {

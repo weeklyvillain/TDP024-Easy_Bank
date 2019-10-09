@@ -43,12 +43,12 @@ public class BankEntityFacadeTest {
 
     @Before
     public void createBank() {
-        bankEntityFacade.create(bankName);
+        BankEntityFacadeDB.create(bankName);
     }
 
     @Test
     public void testCreateBankWithSameName() {
-        long id = bankEntityFacade.create(bankName);
+        long id = BankEntityFacadeDB.create(bankName);
         assertThat(id).isEqualTo(-1);
     }
 

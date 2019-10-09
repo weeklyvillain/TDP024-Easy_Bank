@@ -25,6 +25,7 @@ public class PersonController {
     //----------------------------------------------------------------------- //
 
 // SKA TAS BORT
+/*
     @RequestMapping(path="/create", produces="application/json")
     public ResponseEntity create(@RequestParam String name) {
       System.out.println("Name: " + name);
@@ -32,6 +33,7 @@ public class PersonController {
       String json = new Gson().toJson(key);
       return new ResponseEntity(json, HttpStatus.OK);
     }
+    */
 
     @RequestMapping(path="/list", produces="application/json")
     public ResponseEntity list() {

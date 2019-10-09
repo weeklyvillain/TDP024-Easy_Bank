@@ -27,7 +27,7 @@ public class BankLogicFacadeTest {
 
     @Before
     public void setupTests() {
-        bankLogicFacade.create(bankName);
+        BankEntityFacadeDB.create(bankName);
     }
 
     @Test

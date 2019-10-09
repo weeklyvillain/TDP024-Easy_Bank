@@ -29,14 +29,27 @@ public class AccountController {
             new AccountLogicFacadeImpl(new AccountEntityFacadeDB(), new TransactionEntityFacadeDB(), new HTTPHelperImpl());
     //----------------------------------------------------------------------- //
 
-    @RequestMapping(path="/account/create", produces="application/json")
-    public ResponseEntity create(@RequestParam String accounttype, @RequestParam long person, @RequestParam String bank) {
-        boolean result = accountLogicFacade.create(accounttype, person, bank);
+    @RequestMapping(path="/account/create")
+    public ResponseEntity create(@RequestParam(value = "accounttype", required=false) String accounttype,
+                                 @RequestParam(value = "person", required = false) String person,
+                                 @RequestParam(value="bank", required=false) String bank) {
+        Long personID;
         String json;
-        if (result) {
-            json = new Gson().toJson("OK");
+
+        if (accounttype == null || person == null || bank == null) {
+            json = "FAILED";
         } else {
-            json = new Gson().toJson("FAILED");
+            try {
+                personID = Long.parseLong(person);
+                boolean result = accountLogicFacade.create(accounttype, personID, bank);
+                if (result) {
+                    json = "OK";
+                } else {
+                    json = "FAILED";
+                }
+            } catch(Exception e) {
+                json = "FAILED";
+            }
         }
         return new ResponseEntity(json, HttpStatus.OK);
     }

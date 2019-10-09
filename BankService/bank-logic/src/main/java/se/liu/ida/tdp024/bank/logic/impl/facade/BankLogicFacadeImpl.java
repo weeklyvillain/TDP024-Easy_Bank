@@ -29,11 +29,6 @@ public class BankLogicFacadeImpl implements BankLogicFacade {
       return bankEntityFacade.find(key);
     }
 
-    @Override
-    public long create(String name) {
-      return bankEntityFacade.create(name);
-    }
-
 
     /*
     @Override
