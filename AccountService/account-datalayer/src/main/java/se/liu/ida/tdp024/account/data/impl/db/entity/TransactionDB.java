@@ -34,55 +34,22 @@ public class TransactionDB implements Transaction {
     }
 
     @Override
-    public long getId() {
-        return this.id;
-    }
-    @Override
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    @Override
-    public int getAmount() {
-        return this.amount;
-    }
-    @Override
     public void setAmount(int amount) {
         this.amount = amount;
     }
 
-    @Override
-    public String getType() {
-        return this.type;
-    }
     @Override
     public void setType(String type) {
         this.type = type;
     }
 
     @Override
-    public String getDate() {
-        return this.created;
-    }
-
-    @Override
-    public String getStatus() {
-        return this.status;
-    }
-    @Override
     public void setStatus(String status) {
         this.status = status;
     }
 
     @Override
-    public Account getAccount() {
-        return this.account;
-    }
-    @Override
     public void setAccount(Account account) {
-        if (account instanceof AccountDB) {
-            this.account = (AccountDB) account;
-        } else {
-        }
+        this.account = (AccountDB) account;
     }
 }

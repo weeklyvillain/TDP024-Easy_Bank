@@ -17,40 +17,29 @@ import com.google.gson.Gson;
 public class TransactionEntityFacadeDB implements TransactionEntityFacade {
     @Override
     public void create(String type, int amount, String status, Account account) {
+        // Ifall account är null, inserta inget i databasen
+        if (account == null)
+            return;
+
         EntityManager em = EMF.getEntityManager();
         Transaction transaction = new TransactionDB();
-
-        try {
-          em.getTransaction().begin();
-          transaction.setType(type);
-          transaction.setAmount(amount);
-          transaction.setStatus(status);
-          transaction.setAccount(account);
-          em.merge(transaction);
-          em.getTransaction().commit();
-        } catch(Exception e) {
-          System.out.println(e);
-        } finally {
-          if (em.getTransaction().isActive()) {
-            em.getTransaction().rollback();
-          }
-          em.close();
-        }
+        em.getTransaction().begin();
+        transaction.setType(type);
+        transaction.setAmount(amount);
+        transaction.setStatus(status);
+        transaction.setAccount(account);
+        em.merge(transaction);
+        em.getTransaction().commit();
+        em.close();
     }
 
     @Override
     public List<Transaction> find(Account account) {
         EntityManager em = EMF.getEntityManager();
-        try {
-            List<Transaction> result = (List<Transaction>) em.createQuery("SELECT t FROM TransactionDB t WHERE t.account = :account ")
+        List<Transaction> result = (List<Transaction>) em.createQuery("SELECT t FROM TransactionDB t WHERE t.account = :account ")
                   .setParameter("account", account)
                   .getResultList();
-            return result;
-        } catch(Exception e) {
-            System.out.println(e);
-            return new ArrayList<Transaction>();
-        } finally {
-            em.close();
-        }
+        em.close();
+        return result;
     }
 }

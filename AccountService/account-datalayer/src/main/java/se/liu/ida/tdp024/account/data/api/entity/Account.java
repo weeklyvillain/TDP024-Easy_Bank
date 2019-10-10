@@ -5,10 +5,6 @@ import javax.persistence.Entity;
 
 @Entity
 public interface Account extends Serializable {
-    public long getId();
-    public long getPersonKey();
-    public long getBankKey();
-    public String getType();
     public int getHoldings();
 
     public void setHoldings(int newHoldings);

@@ -27,34 +27,16 @@ public class AccountDB implements Account {
     }
     */
 
-
-    @Override
-    public long getId() {
-        return this.id;
-    }
-
-    @Override
-    public long getPersonKey() {
-        return this.personKey;
-    }
     @Override
     public void setPersonKey(long personKey) {
         this.personKey = personKey;
     }
 
     @Override
-    public String getType() {
-        return this.accountType;
-    }
-    @Override
     public void setType(String type) {
         this.accountType = type;
     }
 
-    @Override
-    public long getBankKey() {
-        return this.bankKey;
-    }
     @Override
     public void setBankKey(long bankKey) {
         this.bankKey = bankKey;

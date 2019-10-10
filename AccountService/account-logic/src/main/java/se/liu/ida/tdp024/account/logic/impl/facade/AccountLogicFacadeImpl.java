@@ -84,7 +84,6 @@ public class AccountLogicFacadeImpl implements AccountLogicFacade {
     }
     private boolean validateBankName(String bankName) {
         String result = this.httpHelper.get("http://localhost:8070/bank/find", "name", bankName);
-        System.out.println(result);
         return !result.equals("null");
 
     }
@@ -94,11 +93,8 @@ public class AccountLogicFacadeImpl implements AccountLogicFacade {
 
     private long getBankKey(String bankName) {
         String result = this.httpHelper.get("http://localhost:8070/bank/find", "name", bankName);
-        if (!result.equals("null")) {
-            JsonObject bank = new Gson().fromJson(result, JsonObject.class);
-            return bank.get("id").getAsLong();
-        }
-        return -1;
+        JsonObject bank = new Gson().fromJson(result, JsonObject.class);
+        return bank.get("id").getAsLong();
     }
 }
 /*

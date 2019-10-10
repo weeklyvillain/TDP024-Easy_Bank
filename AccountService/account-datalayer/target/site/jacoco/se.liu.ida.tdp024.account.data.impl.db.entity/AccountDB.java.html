@@ -8,7 +8,7 @@ import javax.persistence.ManyToOne;
 import se.liu.ida.tdp024.account.data.api.entity.Account;
 
 @Entity
-<span class="nc" id="L11">public class AccountDB implements Account {</span>
+<span class="fc" id="L11">public class AccountDB implements Account {</span>
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
@@ -27,47 +27,29 @@ import se.liu.ida.tdp024.account.data.api.entity.Account;
     }
     */
 
-
-    @Override
-    public long getId() {
-<span class="nc" id="L33">        return this.id;</span>
-    }
-
-    @Override
-    public long getPersonKey() {
-<span class="nc" id="L38">        return this.personKey;</span>
-    }
     @Override
     public void setPersonKey(long personKey) {
-<span class="nc" id="L42">        this.personKey = personKey;</span>
-<span class="nc" id="L43">    }</span>
+<span class="fc" id="L32">        this.personKey = personKey;</span>
+<span class="fc" id="L33">    }</span>
 
-    @Override
-    public String getType() {
-<span class="nc" id="L47">        return this.accountType;</span>
-    }
     @Override
     public void setType(String type) {
-<span class="nc" id="L51">        this.accountType = type;</span>
-<span class="nc" id="L52">    }</span>
+<span class="fc" id="L37">        this.accountType = type;</span>
+<span class="fc" id="L38">    }</span>
 
     @Override
-    public long getBankKey() {
-<span class="nc" id="L56">        return this.bankKey;</span>
-    }
-    @Override
     public void setBankKey(long bankKey) {
-<span class="nc" id="L60">        this.bankKey = bankKey;</span>
-<span class="nc" id="L61">    }</span>
+<span class="fc" id="L42">        this.bankKey = bankKey;</span>
+<span class="fc" id="L43">    }</span>
 
     @Override
     public int getHoldings() {
-<span class="nc" id="L65">        return this.holdings;</span>
+<span class="fc" id="L47">        return this.holdings;</span>
     }
     @Override
     public void setHoldings(int newHoldings) {
-<span class="nc" id="L69">        this.holdings = newHoldings;</span>
-<span class="nc" id="L70">    }</span>
+<span class="fc" id="L51">        this.holdings = newHoldings;</span>
+<span class="fc" id="L52">    }</span>
 }
 /*
 @Entity

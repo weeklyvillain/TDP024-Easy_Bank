@@ -17,40 +17,25 @@ public class AccountEntityFacadeDB implements AccountEntityFacade {
     public boolean create(String type, long personKey, long bankKey) {
         EntityManager em = EMF.getEntityManager();
         Account account = new AccountDB();
-        try {
         em.getTransaction().begin();
         account.setType(type);
         account.setBankKey(bankKey);
         account.setPersonKey(personKey);
         account.setHoldings(0);
-          em.persist(account);
-          em.getTransaction().commit();
-          return true;
-        } catch(Exception e) {
-          System.out.println(e);
-          return false;
-        } finally {
-          if (em.getTransaction().isActive()) {
-            em.getTransaction().rollback();
-          }
-          em.close();
-        }
+        em.persist(account);
+        em.getTransaction().commit();
+        em.close();
+        return true;
     }
 
     @Override
     public List<Account> findByPersonKey(long personKey) {
         EntityManager em = EMF.getEntityManager();
-        try {
-            List<Account> result = (List<Account>) em.createQuery("SELECT t FROM AccountDB t WHERE t.personKey = :key ")
-                  .setParameter("key", personKey)
-                  .getResultList();
-            return result;
-        } catch(Exception e) {
-            System.out.println(e);
-            return new ArrayList<Account>();
-        } finally {
-            em.close();
-        }
+        List<Account> result = (List<Account>) em.createQuery("SELECT t FROM AccountDB t WHERE t.personKey = :key ")
+              .setParameter("key", personKey)
+              .getResultList();
+        em.close();
+        return result;
     }
 
     @Override
@@ -82,6 +67,7 @@ public class AccountEntityFacadeDB implements AccountEntityFacade {
     public boolean credit(long id, int amount) {
         EntityManager em = EMF.getEntityManager();
         Account account = this.findByAccountId(id, em);
+        System.out.println(account);
 
         try {
             em.getTransaction().begin();
@@ -105,12 +91,14 @@ public class AccountEntityFacadeDB implements AccountEntityFacade {
     // Help functions
     @Override
     public Account findByAccountId(long id, EntityManager em) {
+        System.out.println("ID: " + id);
         try {
             Account result = (Account) em.createQuery("SELECT t FROM AccountDB t WHERE t.id = :id ")
                   .setParameter("id", id)
                   .getSingleResult();
             return result;
         } catch(Exception e) {
+            System.out.println(e);
             return null;
         }
     }

@@ -1,20 +1,7 @@
 ----------------------------------------------------------------
-Wed Oct 09 10:16:40 CEST 2019:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.14.2.0 - (1828579): instance a816c00e-016d-af97-6f8f-000012bddf50 
+Thu Oct 10 14:16:25 CEST 2019:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.14.2.0 - (1828579): instance a816c00e-016d-b599-4b56-000007b2bae8 
 on database directory memory:/home/gussv375/Desktop/tdp024/BankService/bank-rest/testdb with class loader java.net.URLClassLoader@420cd102 
-Loaded from file:/home/gussv375/.m2/repository/org/apache/derby/derby/10.14.2.0/derby-10.14.2.0.jar
-java.vendor=Ubuntu
-java.runtime.version=11.0.4+11-post-Ubuntu-1ubuntu218.04.3
-user.dir=/home/gussv375/Desktop/tdp024/BankService/bank-rest
-os.name=Linux
-os.arch=amd64
-os.version=4.15.0-65-generic
-derby.system.home=null
-Database Class Loader started - derby.database.classpath=''
-----------------------------------------------------------------
-Wed Oct 09 10:16:42 CEST 2019:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.14.2.0 - (1828579): instance 070a00b0-016d-af97-6f8f-000012bddf50 
-on database directory memory:/home/gussv375/Desktop/tdp024/BankService/bank-rest/dataPU_embedded with class loader java.net.URLClassLoader@420cd102 
 Loaded from file:/home/gussv375/.m2/repository/org/apache/derby/derby/10.14.2.0/derby-10.14.2.0.jar
 java.vendor=Ubuntu
 java.runtime.version=11.0.4+11-post-Ubuntu-1ubuntu218.04.3

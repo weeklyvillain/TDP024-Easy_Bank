@@ -14,44 +14,33 @@ import se.liu.ida.tdp024.account.data.api.facade.TransactionEntityFacade;
 import se.liu.ida.tdp024.account.data.impl.db.util.EMF;
 import com.google.gson.Gson;
 
-<span class="nc" id="L17">public class TransactionEntityFacadeDB implements TransactionEntityFacade {</span>
+<span class="fc" id="L17">public class TransactionEntityFacadeDB implements TransactionEntityFacade {</span>
     @Override
     public void create(String type, int amount, String status, Account account) {
-<span class="nc" id="L20">        EntityManager em = EMF.getEntityManager();</span>
-<span class="nc" id="L21">        Transaction transaction = new TransactionDB();</span>
+        // Ifall account är null, inserta inget i databasen
+<span class="fc bfc" id="L21" title="All 2 branches covered.">        if (account == null)</span>
+<span class="fc" id="L22">            return;</span>
 
-        try {
-<span class="nc" id="L24">          em.getTransaction().begin();</span>
-<span class="nc" id="L25">          transaction.setType(type);</span>
-<span class="nc" id="L26">          transaction.setAmount(amount);</span>
-<span class="nc" id="L27">          transaction.setStatus(status);</span>
-<span class="nc" id="L28">          transaction.setAccount(account);</span>
-<span class="nc" id="L29">          em.merge(transaction);</span>
-<span class="nc" id="L30">          em.getTransaction().commit();</span>
-<span class="nc" id="L31">        } catch(Exception e) {</span>
-<span class="nc" id="L32">          System.out.println(e);</span>
-        } finally {
-<span class="nc bnc" id="L34" title="All 2 branches missed.">          if (em.getTransaction().isActive()) {</span>
-<span class="nc" id="L35">            em.getTransaction().rollback();</span>
-          }
-<span class="nc" id="L37">          em.close();</span>
-        }
-<span class="nc" id="L39">    }</span>
+<span class="fc" id="L24">        EntityManager em = EMF.getEntityManager();</span>
+<span class="fc" id="L25">        Transaction transaction = new TransactionDB();</span>
+<span class="fc" id="L26">        em.getTransaction().begin();</span>
+<span class="fc" id="L27">        transaction.setType(type);</span>
+<span class="fc" id="L28">        transaction.setAmount(amount);</span>
+<span class="fc" id="L29">        transaction.setStatus(status);</span>
+<span class="fc" id="L30">        transaction.setAccount(account);</span>
+<span class="fc" id="L31">        em.merge(transaction);</span>
+<span class="fc" id="L32">        em.getTransaction().commit();</span>
+<span class="fc" id="L33">        em.close();</span>
+<span class="fc" id="L34">    }</span>
 
     @Override
     public List&lt;Transaction&gt; find(Account account) {
-<span class="nc" id="L43">        EntityManager em = EMF.getEntityManager();</span>
-        try {
-<span class="nc" id="L45">            List&lt;Transaction&gt; result = (List&lt;Transaction&gt;) em.createQuery(&quot;SELECT t FROM TransactionDB t WHERE t.account = :account &quot;)</span>
-<span class="nc" id="L46">                  .setParameter(&quot;account&quot;, account)</span>
-<span class="nc" id="L47">                  .getResultList();</span>
-<span class="nc" id="L48">            return result;</span>
-<span class="nc" id="L49">        } catch(Exception e) {</span>
-<span class="nc" id="L50">            System.out.println(e);</span>
-<span class="nc" id="L51">            return new ArrayList&lt;Transaction&gt;();</span>
-        } finally {
-<span class="nc" id="L53">            em.close();</span>
-        }
+<span class="fc" id="L38">        EntityManager em = EMF.getEntityManager();</span>
+<span class="fc" id="L39">        List&lt;Transaction&gt; result = (List&lt;Transaction&gt;) em.createQuery(&quot;SELECT t FROM TransactionDB t WHERE t.account = :account &quot;)</span>
+<span class="fc" id="L40">                  .setParameter(&quot;account&quot;, account)</span>
+<span class="fc" id="L41">                  .getResultList();</span>
+<span class="fc" id="L42">        em.close();</span>
+<span class="fc" id="L43">        return result;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>
