@@ -17,64 +17,29 @@ import se.liu.ida.tdp024.account.data.api.entity.Account;
     private long bankKey;
     private int holdings;
 
-/*
-    public AccountDB(Account that) {
-        this.id = that.getId();
-        this.personKey = that.getPersonKey();
-        this.accountType = that.getType();
-        this.bankKey = that.getBankKey();
-        this.holdins = that.getHoldings();
-    }
-    */
 
     @Override
     public void setPersonKey(long personKey) {
-<span class="fc" id="L32">        this.personKey = personKey;</span>
-<span class="fc" id="L33">    }</span>
+<span class="fc" id="L23">        this.personKey = personKey;</span>
+<span class="fc" id="L24">    }</span>
 
     @Override
     public void setType(String type) {
-<span class="fc" id="L37">        this.accountType = type;</span>
-<span class="fc" id="L38">    }</span>
+<span class="fc" id="L28">        this.accountType = type;</span>
+<span class="fc" id="L29">    }</span>
 
     @Override
     public void setBankKey(long bankKey) {
-<span class="fc" id="L42">        this.bankKey = bankKey;</span>
-<span class="fc" id="L43">    }</span>
+<span class="fc" id="L33">        this.bankKey = bankKey;</span>
+<span class="fc" id="L34">    }</span>
 
     @Override
     public int getHoldings() {
-<span class="fc" id="L47">        return this.holdings;</span>
+<span class="fc" id="L38">        return this.holdings;</span>
     }
     @Override
     public void setHoldings(int newHoldings) {
-<span class="fc" id="L51">        this.holdings = newHoldings;</span>
-<span class="fc" id="L52">    }</span>
+<span class="fc" id="L42">        this.holdings = newHoldings;</span>
+<span class="fc" id="L43">    }</span>
 }
-/*
-@Entity
-public class PersonDB implements Person {
-  @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
-  private long id;
-
-  private String name;
-
-  // --- Getters and Setters --- //
-  @Override
-  public long getId() {
-      return id;
-  }
-
-  @Override
-  public String getName() {
-    return name;
-  }
-
-  @Override
-  public void setName(String name) {
-    this.name = name;
-  }
-}
-*/
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

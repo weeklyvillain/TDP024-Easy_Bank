@@ -7,7 +7,6 @@ import java.util.List;
 
 public class BankLogicFacadeImpl implements BankLogicFacade {
 
-    //private TodoEntityFacade todoEntityFacade;
     private BankEntityFacade bankEntityFacade;
 
     public BankLogicFacadeImpl(BankEntityFacade bankEntityFacade) {
@@ -28,27 +27,4 @@ public class BankLogicFacadeImpl implements BankLogicFacade {
     public Bank find(long key) {
       return bankEntityFacade.find(key);
     }
-
-
-    /*
-    @Override
-    public long create(String title, String body) {
-        return todoEntityFacade.create(title, body);
-    }
-
-    @Override
-    public Todo find(long id) {
-        return todoEntityFacade.find(id);
-    }
-
-    @Override
-    public void checkOut(long id) {
-        this.todoEntityFacade.setActive(id, true);
-    }
-
-    @Override
-    public void checkIn(long id) {
-        this.todoEntityFacade.setActive(id, false);
-    }
-    */
 }

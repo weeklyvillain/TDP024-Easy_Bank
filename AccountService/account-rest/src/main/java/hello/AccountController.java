@@ -13,6 +13,7 @@ import se.liu.ida.tdp024.account.data.api.entity.Transaction;
 import se.liu.ida.tdp024.account.data.impl.db.facade.AccountEntityFacadeDB;
 import se.liu.ida.tdp024.account.data.impl.db.facade.TransactionEntityFacadeDB;
 import se.liu.ida.tdp024.account.logic.api.facade.AccountLogicFacade;
+import se.liu.ida.tdp024.account.data.api.facade.TransactionEntityFacade;
 import se.liu.ida.tdp024.account.logic.impl.facade.AccountLogicFacadeImpl;
 import se.liu.ida.tdp024.account.util.http.HTTPHelperImpl;
 
@@ -25,8 +26,10 @@ import com.google.gson.Gson;
 @RequestMapping("account-rest")
 public class AccountController {
     // --- Here we choose the implementations of the logic and data layer --- //
-    private final AccountLogicFacade accountLogicFacade =
-            new AccountLogicFacadeImpl(new AccountEntityFacadeDB(), new TransactionEntityFacadeDB(), new HTTPHelperImpl());
+    private TransactionEntityFacade transactionEntityFacade = new TransactionEntityFacadeDB();
+    private final AccountLogicFacade accountLogicFacade = new AccountLogicFacadeImpl(new AccountEntityFacadeDB(this.transactionEntityFacade),
+                                                                                    this.transactionEntityFacade,
+                                                                                    new HTTPHelperImpl());
     //----------------------------------------------------------------------- //
 
     @RequestMapping(path="/account/create")

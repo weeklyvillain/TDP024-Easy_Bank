@@ -10,80 +10,112 @@ import se.liu.ida.tdp024.account.data.api.entity.Account;
 import se.liu.ida.tdp024.account.data.impl.db.entity.AccountDB;
 import se.liu.ida.tdp024.account.data.api.facade.AccountEntityFacade;
 import se.liu.ida.tdp024.account.data.impl.db.util.EMF;
+import se.liu.ida.tdp024.account.data.impl.db.facade.TransactionEntityFacadeDB;
+import se.liu.ida.tdp024.account.data.api.facade.TransactionEntityFacade;
 
-<span class="fc" id="L14">public class AccountEntityFacadeDB implements AccountEntityFacade {</span>
+
+public class AccountEntityFacadeDB implements AccountEntityFacade {
+    TransactionEntityFacade transactionEntityFacade;
+
+<span class="fc" id="L20">    public AccountEntityFacadeDB(TransactionEntityFacade transactionEntityFacade) {</span>
+<span class="fc" id="L21">        this.transactionEntityFacade = transactionEntityFacade;</span>
+<span class="fc" id="L22">    }</span>
+
 
     @Override
     public boolean create(String type, long personKey, long bankKey) {
-<span class="fc" id="L18">        EntityManager em = EMF.getEntityManager();</span>
-<span class="fc" id="L19">        Account account = new AccountDB();</span>
-<span class="fc" id="L20">        em.getTransaction().begin();</span>
-<span class="fc" id="L21">        account.setType(type);</span>
-<span class="fc" id="L22">        account.setBankKey(bankKey);</span>
-<span class="fc" id="L23">        account.setPersonKey(personKey);</span>
-<span class="fc" id="L24">        account.setHoldings(0);</span>
-<span class="fc" id="L25">        em.persist(account);</span>
-<span class="fc" id="L26">        em.getTransaction().commit();</span>
-<span class="fc" id="L27">        em.close();</span>
-<span class="fc" id="L28">        return true;</span>
+<span class="fc" id="L27">        EntityManager em = EMF.getEntityManager();</span>
+<span class="fc" id="L28">        Account account = new AccountDB();</span>
+<span class="fc" id="L29">        em.getTransaction().begin();</span>
+<span class="fc" id="L30">        account.setType(type);</span>
+<span class="fc" id="L31">        account.setBankKey(bankKey);</span>
+<span class="fc" id="L32">        account.setPersonKey(personKey);</span>
+<span class="fc" id="L33">        account.setHoldings(0);</span>
+<span class="fc" id="L34">        em.persist(account);</span>
+<span class="fc" id="L35">        em.getTransaction().commit();</span>
+<span class="fc" id="L36">        em.close();</span>
+<span class="fc" id="L37">        return true;</span>
     }
 
     @Override
     public List&lt;Account&gt; findByPersonKey(long personKey) {
-<span class="fc" id="L33">        EntityManager em = EMF.getEntityManager();</span>
-<span class="fc" id="L34">        List&lt;Account&gt; result = (List&lt;Account&gt;) em.createQuery(&quot;SELECT t FROM AccountDB t WHERE t.personKey = :key &quot;)</span>
-<span class="fc" id="L35">              .setParameter(&quot;key&quot;, personKey)</span>
-<span class="fc" id="L36">              .getResultList();</span>
-<span class="fc" id="L37">        em.close();</span>
-<span class="fc" id="L38">        return result;</span>
+<span class="fc" id="L42">        EntityManager em = EMF.getEntityManager();</span>
+<span class="fc" id="L43">        List&lt;Account&gt; result = (List&lt;Account&gt;) em.createQuery(&quot;SELECT t FROM AccountDB t WHERE t.personKey = :key &quot;)</span>
+<span class="fc" id="L44">              .setParameter(&quot;key&quot;, personKey)</span>
+<span class="fc" id="L45">              .getResultList();</span>
+<span class="fc" id="L46">        em.close();</span>
+<span class="fc" id="L47">        return result;</span>
     }
 
     @Override
     public boolean debit(long id, int amount) {
-<span class="fc" id="L43">        EntityManager em = EMF.getEntityManager();</span>
-<span class="fc" id="L44">        Account account = this.findByAccountId(id, em);</span>
+<span class="fc" id="L52">        String type = &quot;DEBIT&quot;;</span>
+<span class="fc" id="L53">        String status = &quot;&quot;;</span>
+        boolean result;
+
+<span class="fc" id="L56">        EntityManager em = EMF.getEntityManager();</span>
+<span class="fc" id="L57">        Account account = this.findByAccountId(id, em);</span>
         try {
-<span class="fc" id="L46">            em.getTransaction().begin();</span>
-<span class="fc" id="L47">            em.lock(account, LockModeType.PESSIMISTIC_WRITE);</span>
-<span class="fc bfc" id="L48" title="All 2 branches covered.">            if (account.getHoldings() &lt; amount) {</span>
-<span class="fc" id="L49">                return false;</span>
+<span class="fc" id="L59">            em.getTransaction().begin();</span>
+<span class="fc" id="L60">            em.lock(account, LockModeType.PESSIMISTIC_WRITE);</span>
+
+<span class="pc bpc" id="L62" title="1 of 4 branches missed.">            if (account.getHoldings() &lt; amount || amount &lt; 0) {</span>
+<span class="fc" id="L63">                status = &quot;FAILED&quot;;</span>
+<span class="fc" id="L64">                result = false;</span>
+            } else {
+<span class="fc" id="L66">                account.setHoldings(account.getHoldings() - amount);</span>
+<span class="fc" id="L67">                em.merge(account);</span>
+<span class="fc" id="L68">                status = &quot;OK&quot;;</span>
+<span class="fc" id="L69">                result = true;</span>
             }
-<span class="fc" id="L51">            account.setHoldings(account.getHoldings() - amount);</span>
-<span class="fc" id="L52">            em.merge(account);</span>
-<span class="fc" id="L53">            em.getTransaction().commit();</span>
-<span class="fc" id="L54">            return true;</span>
-<span class="nc" id="L55">        } catch(Exception e) {</span>
-<span class="nc" id="L56">          System.out.println(e);</span>
-<span class="nc" id="L57">          return false;</span>
+<span class="fc" id="L71">            this.transactionEntityFacade.create(type, amount, status, account, em);</span>
+<span class="fc" id="L72">            em.getTransaction().commit();</span>
+<span class="fc" id="L73">            return result;</span>
+<span class="nc" id="L74">        } catch(Exception e) {</span>
+<span class="nc" id="L75">          System.out.println(e);</span>
+<span class="nc" id="L76">          return false;</span>
         } finally {
-<span class="fc bfc" id="L59" title="All 2 branches covered.">          if (em.getTransaction().isActive()) {</span>
-<span class="fc" id="L60">            em.getTransaction().rollback();</span>
+<span class="pc bpc" id="L78" title="1 of 2 branches missed.">          if (em.getTransaction().isActive()) {</span>
+<span class="nc" id="L79">            em.getTransaction().rollback();</span>
           }
-<span class="fc" id="L62">          em.close();</span>
+<span class="fc" id="L81">          em.close();</span>
         }
     }
 
     @Override
     public boolean credit(long id, int amount) {
-<span class="fc" id="L68">        EntityManager em = EMF.getEntityManager();</span>
-<span class="fc" id="L69">        Account account = this.findByAccountId(id, em);</span>
-<span class="fc" id="L70">        System.out.println(account);</span>
+<span class="fc" id="L87">        String type = &quot;CREDIT&quot;;</span>
+<span class="fc" id="L88">        String status = &quot;&quot;;</span>
+        boolean result;
+
+<span class="fc" id="L91">        EntityManager em = EMF.getEntityManager();</span>
+<span class="fc" id="L92">        Account account = this.findByAccountId(id, em);</span>
+<span class="fc" id="L93">        System.out.println(account);</span>
 
         try {
-<span class="fc" id="L73">            em.getTransaction().begin();</span>
-<span class="fc" id="L74">            em.lock(account, LockModeType.PESSIMISTIC_WRITE);</span>
-<span class="fc" id="L75">            account.setHoldings(account.getHoldings() + amount);</span>
-<span class="fc" id="L76">            em.merge(account);</span>
-<span class="fc" id="L77">            em.getTransaction().commit();</span>
-<span class="fc" id="L78">            return true;</span>
-<span class="nc" id="L79">        } catch(Exception e) {</span>
-<span class="nc" id="L80">          System.out.println(e);</span>
-<span class="nc" id="L81">          return false;</span>
+<span class="fc" id="L96">            em.getTransaction().begin();</span>
+<span class="fc" id="L97">            em.lock(account, LockModeType.PESSIMISTIC_WRITE);</span>
+
+<span class="pc bpc" id="L99" title="1 of 2 branches missed.">            if (amount &lt; 0) {</span>
+<span class="nc" id="L100">                status = &quot;FAILED&quot;;</span>
+<span class="nc" id="L101">                result = false;</span>
+            } else {
+<span class="fc" id="L103">                account.setHoldings(account.getHoldings() + amount);</span>
+<span class="fc" id="L104">                em.merge(account);</span>
+<span class="fc" id="L105">                status = &quot;OK&quot;;</span>
+<span class="fc" id="L106">                result = true;</span>
+            }
+<span class="fc" id="L108">            this.transactionEntityFacade.create(type, amount, status, account, em);</span>
+<span class="fc" id="L109">            em.getTransaction().commit();</span>
+<span class="fc" id="L110">            return result;</span>
+<span class="nc" id="L111">        } catch(Exception e) {</span>
+<span class="nc" id="L112">          System.out.println(e);</span>
+<span class="nc" id="L113">          return false;</span>
         } finally {
-<span class="pc bpc" id="L83" title="1 of 2 branches missed.">          if (em.getTransaction().isActive()) {</span>
-<span class="nc" id="L84">            em.getTransaction().rollback();</span>
+<span class="pc bpc" id="L115" title="1 of 2 branches missed.">          if (em.getTransaction().isActive()) {</span>
+<span class="nc" id="L116">            em.getTransaction().rollback();</span>
           }
-<span class="fc" id="L86">          em.close();</span>
+<span class="fc" id="L118">          em.close();</span>
         }
     }
 
@@ -91,202 +123,30 @@ import se.liu.ida.tdp024.account.data.impl.db.util.EMF;
     // Help functions
     @Override
     public Account findByAccountId(long id, EntityManager em) {
-<span class="fc" id="L94">        System.out.println(&quot;ID: &quot; + id);</span>
+<span class="fc" id="L126">        System.out.println(&quot;ID: &quot; + id);</span>
         try {
-<span class="fc" id="L96">            Account result = (Account) em.createQuery(&quot;SELECT t FROM AccountDB t WHERE t.id = :id &quot;)</span>
-<span class="fc" id="L97">                  .setParameter(&quot;id&quot;, id)</span>
-<span class="fc" id="L98">                  .getSingleResult();</span>
-<span class="fc" id="L99">            return result;</span>
-<span class="fc" id="L100">        } catch(Exception e) {</span>
-<span class="fc" id="L101">            System.out.println(e);</span>
-<span class="fc" id="L102">            return null;</span>
+<span class="fc" id="L128">            Account result = (Account) em.createQuery(&quot;SELECT t FROM AccountDB t WHERE t.id = :id &quot;)</span>
+<span class="fc" id="L129">                  .setParameter(&quot;id&quot;, id)</span>
+<span class="fc" id="L130">                  .getSingleResult();</span>
+<span class="fc" id="L131">            return result;</span>
+<span class="fc" id="L132">        } catch(Exception e) {</span>
+<span class="fc" id="L133">            System.out.println(e);</span>
+<span class="fc" id="L134">            return null;</span>
         }
     }
     @Override
     public Account findByAccountId(long id) {
-<span class="fc" id="L107">        EntityManager em = EMF.getEntityManager();</span>
+<span class="fc" id="L139">        EntityManager em = EMF.getEntityManager();</span>
         try {
-<span class="fc" id="L109">            Account result = (Account) em.createQuery(&quot;SELECT t FROM AccountDB t WHERE t.id = :id &quot;)</span>
-<span class="fc" id="L110">                  .setParameter(&quot;id&quot;, id)</span>
-<span class="fc" id="L111">                  .getSingleResult();</span>
-<span class="fc" id="L112">            return result;</span>
-<span class="fc" id="L113">        } catch(Exception e) {</span>
-<span class="fc" id="L114">            return null;</span>
+<span class="fc" id="L141">            Account result = (Account) em.createQuery(&quot;SELECT t FROM AccountDB t WHERE t.id = :id &quot;)</span>
+<span class="fc" id="L142">                  .setParameter(&quot;id&quot;, id)</span>
+<span class="fc" id="L143">                  .getSingleResult();</span>
+<span class="fc" id="L144">            return result;</span>
+<span class="fc" id="L145">        } catch(Exception e) {</span>
+<span class="fc" id="L146">            return null;</span>
         } finally {
-<span class="fc" id="L116">            em.close();</span>
+<span class="fc" id="L148">            em.close();</span>
         }
     }
 }
-
-/*
-public class AccountEntityFacadeDB implements AccountEntityFacade {
-
-    @Override
-    public List&lt;Account&gt; list() {
-      EntityManager em = EMF.getEntityManager();
-
-      Query query = em.createQuery(&quot;SELECT t FROM AccountDB t&quot;);
-      List&lt;Account&gt; result =  query.getResultList();
-      em.close();
-      return result;
-    }
-
-    @Override
-    public List&lt;Account&gt; find(String name) {
-        EntityManager em = EMF.getEntityManager();
-        List&lt;Account&gt; result = (List&lt;Account&gt;) em.createQuery(&quot;SELECT t FROM AccountDB t WHERE t.name LIKE :name &quot;)
-              .setParameter(&quot;name&quot;, name)
-              .getResultList();
-        em.close();
-        return result;
-    }
-
-    @Override
-    public Account find(long key) {
-        EntityManager em = EMF.getEntityManager();
-        try {
-            Account result = (Account) em.createQuery(&quot;SELECT t FROM AccountDB t WHERE t.id = :key &quot;)
-                  .setParameter(&quot;key&quot;, key)
-                  .getSingleResult();
-            return result;
-        } catch(Exception e) {
-            System.out.println(e);
-            return null;
-        } finally {
-            em.close();
-        }
-
-    }
-
-    @Override
-    public long create(String name) {
-      EntityManager em = EMF.getEntityManager();
-
-      try {
-        em.getTransaction().begin();
-        Account person = new AccountDB();
-        person.setName(name);
-        em.persist(person);
-        em.getTransaction().commit();
-        return person.getId();
-      } catch(Exception e) {
-        System.out.println(e);
-        return -1;
-      } finally {
-        if (em.getTransaction().isActive()) {
-          em.getTransaction().rollback();
-        }
-        em.close();
-      }
-    }
-
-
-    /*
-    @Override
-    public long create(String title, String body) {
-
-        EntityManager em = EMF.getEntityManager();
-
-        try {
-
-            em.getTransaction().begin();
-
-            Todo todo = new TodoDB();
-            todo.setTitle(title);
-            todo.setBody(body);
-
-            em.persist(todo);
-
-            em.getTransaction().commit();
-
-            return todo.getId();
-
-        } catch (Exception e) {
-
-            todoLogger.log(e);
-            throw new ServiceConfigurationError(&quot;Commit fails&quot;);
-
-        } finally {
-
-            if (em.getTransaction().isActive()) {
-                em.getTransaction().rollback();
-            }
-            em.close();
-        }
-
-    }
-
-    @Override
-    public void setActive(long id, boolean active) {
-
-        EntityManager em = EMF.getEntityManager();
-
-        try {
-
-            em.getTransaction().begin();
-
-            Todo todo = em.find(TodoDB.class, id, LockModeType.PESSIMISTIC_WRITE);
-            todo.setActive(active);
-
-            em.merge(todo);
-
-            em.getTransaction().commit();
-
-        } catch (Exception e) {
-
-            todoLogger.log(e);
-
-        } finally {
-
-            if (em.getTransaction().isActive()) {
-                em.getTransaction().rollback();
-            }
-
-            em.close();
-        }
-
-    }
-
-    @Override
-    public Todo find(long id) {
-
-        EntityManager em = EMF.getEntityManager();
-
-        try {
-
-            return em.find(TodoDB.class, id);
-
-        } catch (Exception e) {
-
-            todoLogger.log(e);
-            return null;
-
-        } finally {
-            em.close();
-        }
-
-    }
-
-    @Override
-    public List&lt;Todo&gt; findAll() {
-
-        EntityManager em = EMF.getEntityManager();
-
-        try {
-
-            Query query = em.createQuery(&quot;SELECT t FROM TodoDB t&quot;);
-            return query.getResultList();
-
-        } catch (Exception e) {
-
-            todoLogger.log(e);
-            return null;
-
-        } finally {
-            em.close();
-        }
-
-    }
-}
-*/
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

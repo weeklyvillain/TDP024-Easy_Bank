@@ -43,33 +43,25 @@ public class AccountLogicFacadeImpl implements AccountLogicFacade {
 <span class="fc" id="L43">        Account account = this.accountEntityFacade.findByAccountId(accountId);</span>
 <span class="fc" id="L44">        boolean result = false;</span>
 <span class="fc bfc" id="L45" title="All 2 branches covered.">        if (account != null) {</span>
-<span class="fc bfc" id="L46" title="All 4 branches covered.">            if (account.getHoldings() &gt;= amount &amp;&amp; amount &gt; 0) {</span>
-<span class="fc" id="L47">                result = this.accountEntityFacade.debit(accountId, amount);</span>
-            }
-<span class="fc bfc" id="L49" title="All 2 branches covered.">            String status = result ? &quot;OK&quot; : &quot;FAILED&quot;;</span>
-<span class="fc" id="L50">            this.transactionEntityFacade.create(&quot;DEBIT&quot;, amount, status, account);</span>
+<span class="fc" id="L46">            result = this.accountEntityFacade.debit(accountId, amount);</span>
         }
-<span class="fc" id="L52">        return result;</span>
+<span class="fc" id="L48">        return result;</span>
     }
 
     @Override
     public boolean credit(long accountId, int amount) {
-<span class="fc" id="L57">        Account account = this.accountEntityFacade.findByAccountId(accountId);</span>
-<span class="fc" id="L58">        boolean result = false;</span>
-<span class="fc bfc" id="L59" title="All 2 branches covered.">        if (account != null) {</span>
-<span class="fc bfc" id="L60" title="All 2 branches covered.">            if (amount &gt; 0) {</span>
-<span class="fc" id="L61">                result = this.accountEntityFacade.credit(accountId, amount);</span>
-            }
-<span class="fc bfc" id="L63" title="All 2 branches covered.">            String status = result ? &quot;OK&quot; : &quot;FAILED&quot;;</span>
-<span class="fc" id="L64">            this.transactionEntityFacade.create(&quot;CREDIT&quot;, amount, status, account);</span>
+<span class="fc" id="L53">        Account account = this.accountEntityFacade.findByAccountId(accountId);</span>
+<span class="fc" id="L54">        boolean result = false;</span>
+<span class="fc bfc" id="L55" title="All 2 branches covered.">        if (account != null) {</span>
+<span class="fc" id="L56">            result = this.accountEntityFacade.credit(accountId, amount);</span>
         }
-<span class="fc" id="L66">        return result;</span>
+<span class="fc" id="L58">        return result;</span>
     }
 
     @Override
     public List&lt;Transaction&gt; getTransactions(long accountId) {
-<span class="fc" id="L71">        Account account = this.accountEntityFacade.findByAccountId(accountId);</span>
-<span class="fc" id="L72">        return this.transactionEntityFacade.find(account);</span>
+<span class="fc" id="L63">        Account account = this.accountEntityFacade.findByAccountId(accountId);</span>
+<span class="fc" id="L64">        return this.transactionEntityFacade.find(account);</span>
     }
 
 
@@ -78,23 +70,23 @@ public class AccountLogicFacadeImpl implements AccountLogicFacade {
 
 
     private boolean validatePersonKey(long personKey) {
-<span class="fc" id="L81">        String result = this.httpHelper.get(&quot;http://localhost:8060/person/find&quot;, &quot;key&quot;, Long.toString(personKey));</span>
-<span class="fc" id="L82">        System.out.println(result);</span>
-<span class="fc bfc" id="L83" title="All 2 branches covered.">        return !result.equals(&quot;null&quot;);</span>
+<span class="fc" id="L73">        String result = this.httpHelper.get(&quot;http://localhost:8060/person/find&quot;, &quot;key&quot;, Long.toString(personKey));</span>
+<span class="fc" id="L74">        System.out.println(result);</span>
+<span class="fc bfc" id="L75" title="All 2 branches covered.">        return !result.equals(&quot;null&quot;);</span>
     }
     private boolean validateBankName(String bankName) {
-<span class="fc" id="L86">        String result = this.httpHelper.get(&quot;http://localhost:8070/bank/find&quot;, &quot;name&quot;, bankName);</span>
-<span class="fc bfc" id="L87" title="All 2 branches covered.">        return !result.equals(&quot;null&quot;);</span>
+<span class="fc" id="L78">        String result = this.httpHelper.get(&quot;http://localhost:8070/bank/find&quot;, &quot;name&quot;, bankName);</span>
+<span class="fc bfc" id="L79" title="All 2 branches covered.">        return !result.equals(&quot;null&quot;);</span>
 
     }
     private boolean validateType(String type) {
-<span class="fc bfc" id="L91" title="All 4 branches covered.">        return type.equals(&quot;CHECK&quot;) || type.equals(&quot;SAVINGS&quot;);</span>
+<span class="fc bfc" id="L83" title="All 4 branches covered.">        return type.equals(&quot;CHECK&quot;) || type.equals(&quot;SAVINGS&quot;);</span>
     }
 
     private long getBankKey(String bankName) {
-<span class="fc" id="L95">        String result = this.httpHelper.get(&quot;http://localhost:8070/bank/find&quot;, &quot;name&quot;, bankName);</span>
-<span class="fc" id="L96">        JsonObject bank = new Gson().fromJson(result, JsonObject.class);</span>
-<span class="fc" id="L97">        return bank.get(&quot;id&quot;).getAsLong();</span>
+<span class="fc" id="L87">        String result = this.httpHelper.get(&quot;http://localhost:8070/bank/find&quot;, &quot;name&quot;, bankName);</span>
+<span class="fc" id="L88">        JsonObject bank = new Gson().fromJson(result, JsonObject.class);</span>
+<span class="fc" id="L89">        return bank.get(&quot;id&quot;).getAsLong();</span>
     }
 }
 /*

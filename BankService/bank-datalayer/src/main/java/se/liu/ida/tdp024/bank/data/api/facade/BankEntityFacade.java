@@ -11,5 +11,4 @@ public interface BankEntityFacade {
 
     public Bank find(long key);
 
-    //public List<Todo> findAll();
 }

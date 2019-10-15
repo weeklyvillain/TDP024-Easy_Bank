@@ -30,16 +30,6 @@ public class BankEntityFacadeTest {
     private EntityManager entityManager = EMF.getEntityManager();
 
     private String bankName = "Handelsbanken";
-    /*
-
-    public List<Bank> list();
-
-    public List<Bank> find(String name);
-
-    public Bank find(long key);
-
-    public long create(String name);
-    */
 
     @Before
     public void createBank() {
@@ -85,7 +75,6 @@ public class BankEntityFacadeTest {
     @After
     public void tearDown() {
         this.entityManager.close();
-       // storageFacade.emptyStorage();
     }
 
 

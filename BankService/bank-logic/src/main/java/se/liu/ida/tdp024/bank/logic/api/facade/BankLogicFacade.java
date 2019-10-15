@@ -5,17 +5,9 @@ import java.util.List;
 
 public interface BankLogicFacade {
 
-    //public long create(String title, String body);
-
     public List<Bank> list();
 
     public Bank find(String name);
 
     public Bank find(long key);
-
-    //public Todo find(long id);
-
-    //public void checkOut(long id);
-
-    //public void checkIn(long id);
 }

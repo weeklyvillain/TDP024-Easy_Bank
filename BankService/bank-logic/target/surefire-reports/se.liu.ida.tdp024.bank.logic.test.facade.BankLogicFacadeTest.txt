@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: se.liu.ida.tdp024.bank.logic.test.facade.BankLogicFacadeTest
 -------------------------------------------------------------------------------
-Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 2.77 s - in se.liu.ida.tdp024.bank.logic.test.facade.BankLogicFacadeTest
+Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 3.8 s - in se.liu.ida.tdp024.bank.logic.test.facade.BankLogicFacadeTest

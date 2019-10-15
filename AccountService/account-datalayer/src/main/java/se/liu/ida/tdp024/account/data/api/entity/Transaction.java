@@ -11,19 +11,3 @@ public interface Transaction extends Serializable {
     public void setAccount(Account account);
     public void setAmount(int amount);
 }
-
-/*
-{
- "id": 144,
- "type": "DEBIT",
- "amount": 8,
- "created": "2013-06-30 14:49:32",
- "status": "OK",
- "account" : {
-   "id": 5,
-   "personKey": "ahRzfmVudGVycHJpc2Utc3lzdGVtc3INCxIGUGVyc29uGLNtDA",
-   "accountType": "CHECK",
-   "bankKey": "ahRzfmVudGVycHJpc2Utc3lzdGVtc3ILCxIEQmFuaxiJJww",
-   "holdings": 42
- }
-*/

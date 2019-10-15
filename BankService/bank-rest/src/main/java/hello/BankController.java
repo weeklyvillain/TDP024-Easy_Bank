@@ -22,18 +22,6 @@ public class BankController {
     // --- Here we choose the implementations of the logic and data layer --- //
     private final BankLogicFacade bankLogicFacade =
             new BankLogicFacadeImpl(new BankEntityFacadeDB());
-    //----------------------------------------------------------------------- //
-
-// SKA TAS BORT
-/*
-    @RequestMapping(path="/create", produces="application/json")
-    public ResponseEntity create(@RequestParam String name) {
-      System.out.println("Name: " + name);
-      long key = bankLogicFacade.create(name);
-      String json = new Gson().toJson(key);
-      return new ResponseEntity(json, HttpStatus.OK);
-    }
-    */
 
     @RequestMapping(path="/list", produces="application/json")
     public ResponseEntity list() {

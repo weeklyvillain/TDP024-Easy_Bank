@@ -34,6 +34,19 @@ public class TransactionEntityFacadeDB implements TransactionEntityFacade {
     }
 
     @Override
+    public void create(String type, int amount, String status, Account account, EntityManager em) {
+        // Ifall account är null, inserta inget i databasen
+        if (account == null)
+            return;
+        Transaction transaction = new TransactionDB();
+        transaction.setType(type);
+        transaction.setAmount(amount);
+        transaction.setStatus(status);
+        transaction.setAccount(account);
+        em.merge(transaction);
+    }
+
+    @Override
     public List<Transaction> find(Account account) {
         EntityManager em = EMF.getEntityManager();
         List<Transaction> result = (List<Transaction>) em.createQuery("SELECT t FROM TransactionDB t WHERE t.account = :account ")

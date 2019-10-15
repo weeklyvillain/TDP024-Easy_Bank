@@ -17,15 +17,6 @@ public class AccountDB implements Account {
     private long bankKey;
     private int holdings;
 
-/*
-    public AccountDB(Account that) {
-        this.id = that.getId();
-        this.personKey = that.getPersonKey();
-        this.accountType = that.getType();
-        this.bankKey = that.getBankKey();
-        this.holdins = that.getHoldings();
-    }
-    */
 
     @Override
     public void setPersonKey(long personKey) {
@@ -51,29 +42,3 @@ public class AccountDB implements Account {
         this.holdings = newHoldings;
     }
 }
-/*
-@Entity
-public class PersonDB implements Person {
-  @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
-  private long id;
-
-  private String name;
-
-  // --- Getters and Setters --- //
-  @Override
-  public long getId() {
-      return id;
-  }
-
-  @Override
-  public String getName() {
-    return name;
-  }
-
-  @Override
-  public void setName(String name) {
-    this.name = name;
-  }
-}
-*/

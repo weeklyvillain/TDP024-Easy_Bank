@@ -7,49 +7,25 @@ import java.util.List;
 
 public class BankLogicFacadeImpl implements BankLogicFacade {
 
-    //private TodoEntityFacade todoEntityFacade;
     private BankEntityFacade bankEntityFacade;
 
-<span class="fc" id="L13">    public BankLogicFacadeImpl(BankEntityFacade bankEntityFacade) {</span>
-<span class="fc" id="L14">        this.bankEntityFacade = bankEntityFacade;</span>
-<span class="fc" id="L15">    }</span>
+<span class="fc" id="L12">    public BankLogicFacadeImpl(BankEntityFacade bankEntityFacade) {</span>
+<span class="fc" id="L13">        this.bankEntityFacade = bankEntityFacade;</span>
+<span class="fc" id="L14">    }</span>
 
     @Override
     public List&lt;Bank&gt; list() {
-<span class="fc" id="L19">      return bankEntityFacade.list();</span>
+<span class="fc" id="L18">      return bankEntityFacade.list();</span>
     }
 
     @Override
     public Bank find(String name) {
-<span class="fc" id="L24">      return bankEntityFacade.find(name);</span>
+<span class="fc" id="L23">      return bankEntityFacade.find(name);</span>
     }
 
     @Override
     public Bank find(long key) {
-<span class="fc" id="L29">      return bankEntityFacade.find(key);</span>
+<span class="fc" id="L28">      return bankEntityFacade.find(key);</span>
     }
-
-
-    /*
-    @Override
-    public long create(String title, String body) {
-        return todoEntityFacade.create(title, body);
-    }
-
-    @Override
-    public Todo find(long id) {
-        return todoEntityFacade.find(id);
-    }
-
-    @Override
-    public void checkOut(long id) {
-        this.todoEntityFacade.setActive(id, true);
-    }
-
-    @Override
-    public void checkIn(long id) {
-        this.todoEntityFacade.setActive(id, false);
-    }
-    */
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

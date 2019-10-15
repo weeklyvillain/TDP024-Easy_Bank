@@ -15,18 +15,3 @@ public interface AccountEntityFacade {
     public Account findByAccountId(long id, EntityManager em);
     public Account findByAccountId(long id);
 }
-/*
-
-public interface PersonEntityFacade {
-
-    public List<Person> list();
-
-    public List<Person> find(String name);
-
-    public Person find(long key);
-
-    public long create(String name);
-
-    //public List<Todo> findAll();
-}
-*/

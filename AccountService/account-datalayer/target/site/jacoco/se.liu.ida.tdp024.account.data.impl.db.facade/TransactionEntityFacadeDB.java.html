@@ -34,13 +34,26 @@ import com.google.gson.Gson;
 <span class="fc" id="L34">    }</span>
 
     @Override
+    public void create(String type, int amount, String status, Account account, EntityManager em) {
+        // Ifall account är null, inserta inget i databasen
+<span class="pc bpc" id="L39" title="1 of 2 branches missed.">        if (account == null)</span>
+<span class="nc" id="L40">            return;</span>
+<span class="fc" id="L41">        Transaction transaction = new TransactionDB();</span>
+<span class="fc" id="L42">        transaction.setType(type);</span>
+<span class="fc" id="L43">        transaction.setAmount(amount);</span>
+<span class="fc" id="L44">        transaction.setStatus(status);</span>
+<span class="fc" id="L45">        transaction.setAccount(account);</span>
+<span class="fc" id="L46">        em.merge(transaction);</span>
+<span class="fc" id="L47">    }</span>
+
+    @Override
     public List&lt;Transaction&gt; find(Account account) {
-<span class="fc" id="L38">        EntityManager em = EMF.getEntityManager();</span>
-<span class="fc" id="L39">        List&lt;Transaction&gt; result = (List&lt;Transaction&gt;) em.createQuery(&quot;SELECT t FROM TransactionDB t WHERE t.account = :account &quot;)</span>
-<span class="fc" id="L40">                  .setParameter(&quot;account&quot;, account)</span>
-<span class="fc" id="L41">                  .getResultList();</span>
-<span class="fc" id="L42">        em.close();</span>
-<span class="fc" id="L43">        return result;</span>
+<span class="fc" id="L51">        EntityManager em = EMF.getEntityManager();</span>
+<span class="fc" id="L52">        List&lt;Transaction&gt; result = (List&lt;Transaction&gt;) em.createQuery(&quot;SELECT t FROM TransactionDB t WHERE t.account = :account &quot;)</span>
+<span class="fc" id="L53">                  .setParameter(&quot;account&quot;, account)</span>
+<span class="fc" id="L54">                  .getResultList();</span>
+<span class="fc" id="L55">        em.close();</span>
+<span class="fc" id="L56">        return result;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

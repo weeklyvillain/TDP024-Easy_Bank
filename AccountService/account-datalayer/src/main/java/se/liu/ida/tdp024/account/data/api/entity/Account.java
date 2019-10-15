@@ -12,14 +12,3 @@ public interface Account extends Serializable {
     public void setType(String type);
     public void setBankKey(long bankKey);
 }
-
-/*
-public interface Person extends Serializable {
-
-    public long getId();
-
-    public String getName();
-
-    public void setName(String name);
-}
-*/

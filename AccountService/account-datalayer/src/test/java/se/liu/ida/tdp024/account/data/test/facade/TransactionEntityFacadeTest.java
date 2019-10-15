@@ -28,21 +28,10 @@ public class TransactionEntityFacadeTest {
 
     //---- Unit under test ----//
     private TransactionEntityFacade transactionEntityFacade = new TransactionEntityFacadeDB();
-    private AccountEntityFacade accountEntityFacade = new AccountEntityFacadeDB();
+    private AccountEntityFacade accountEntityFacade = new AccountEntityFacadeDB(this.transactionEntityFacade);
     private EntityManager entityManager = EMF.getEntityManager();
     private Account account = new AccountDB();
-    /*
 
-    public boolean create(String type, long personKey, long bankKey);
-    public List<Account> findByPersonKey(long personKey);
-    public boolean debit(long id, int amount);
-    public boolean credit(long id, int amount);
-
-
-    // Help functions
-    public Account findByAccountId(long id, EntityManager em);
-    public Account findByAccountId(long id);
-    */
 
     @Before
     public void testCreateTransaction() {
@@ -60,38 +49,4 @@ public class TransactionEntityFacadeTest {
         List<Transaction> transactions = transactionEntityFacade.find(this.account);
         assertThat((transactions.size() > 0));
     }
-/*
-    @Test
-    public void testFindPersonByKey() {
-        List<Account> result = accountEntityFacade.findByPersonKey(1);
-        assertThat((result.size() > 0));
-    }
-
-    private void testCredit() {
-        boolean result = accountEntityFacade.credit(1, 50);
-        assertThat(result).isEqualTo(true);
-    }
-
-    @Test
-    public void testDebitCredit() {
-        boolean failResult = accountEntityFacade.debit(1, 100000);
-        assertThat(failResult).isEqualTo(false);
-        testCredit();
-        boolean result = accountEntityFacade.debit(1, 50);
-        assertThat(result).isEqualTo(true);
-    }
-
-    @Test
-    public void testFindByAccountId() {
-        Account account = accountEntityFacade.findByAccountId(-1, this.entityManager);
-        assertThat(account).isEqualTo(null);
-        account = accountEntityFacade.findByAccountId(1, this.entityManager);
-        assertThat(account).isNotEqualTo(null);
-
-        account = accountEntityFacade.findByAccountId(-1);
-        assertThat(account).isEqualTo(null);
-        account = accountEntityFacade.findByAccountId(1);
-        assertThat(account).isNotEqualTo(null);
-    }
-    */
 }

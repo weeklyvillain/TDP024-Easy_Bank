@@ -27,7 +27,7 @@ import se.liu.ida.tdp024.account.data.api.entity.Transaction;
 
 
 public class AccountLogicFacadeTest {
-    private AccountLogicFacade accountLogicFacade = new AccountLogicFacadeImpl(new AccountEntityFacadeDB(),
+    private AccountLogicFacade accountLogicFacade = new AccountLogicFacadeImpl(new AccountEntityFacadeDB(new TransactionEntityFacadeDB()),
                                                                                new TransactionEntityFacadeDB(),
                                                                                new HTTPHelperImpl());
     private String BANK_NAME = "HANDELSBANKEN";

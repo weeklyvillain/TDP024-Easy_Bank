@@ -43,11 +43,7 @@ public class AccountLogicFacadeImpl implements AccountLogicFacade {
         Account account = this.accountEntityFacade.findByAccountId(accountId);
         boolean result = false;
         if (account != null) {
-            if (account.getHoldings() >= amount && amount > 0) {
-                result = this.accountEntityFacade.debit(accountId, amount);
-            }
-            String status = result ? "OK" : "FAILED";
-            this.transactionEntityFacade.create("DEBIT", amount, status, account);
+            result = this.accountEntityFacade.debit(accountId, amount);
         }
         return result;
     }
@@ -57,11 +53,7 @@ public class AccountLogicFacadeImpl implements AccountLogicFacade {
         Account account = this.accountEntityFacade.findByAccountId(accountId);
         boolean result = false;
         if (account != null) {
-            if (amount > 0) {
-                result = this.accountEntityFacade.credit(accountId, amount);
-            }
-            String status = result ? "OK" : "FAILED";
-            this.transactionEntityFacade.create("CREDIT", amount, status, account);
+            result = this.accountEntityFacade.credit(accountId, amount);
         }
         return result;
     }
